@@ -1,3 +1,3 @@
 # MiProyectoR.java
-Descripción descriptiva
+Descripción descriptiva \n
 La descripcsao
