@@ -1,0 +1,27 @@
+*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package proyect;
+
+/**
+ *
+ * @author HOME
+ */
+public class pago implements FormaPago {
+
+    @Override
+    public void pagoEfectivo(double monto) {
+        System.out.println("Pago en efectivo realizado por: $" + monto);
+    }
+
+    @Override
+    public void pagoTarjeta(String numTarjeta, double monto) {
+        System.out.println("Pago de $" + monto + " procesado con la tarjeta " + numTarjeta);
+    }
+
+    @Override
+    public void pagoTransferencia(String numCuenta, double monto) {
+        System.out.println("Transferencia de $" + monto + " realizada a la cuenta " + numCuenta);
+    }
+}

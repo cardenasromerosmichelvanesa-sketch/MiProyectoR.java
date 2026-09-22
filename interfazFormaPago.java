@@ -13,8 +13,11 @@ public class Restaurante {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        // TODO code application logic here
-    }
+   public interface FormaPago {
+    void pagoEfectivo(double monto);
+    void pagoTarjeta(String numTarjeta, double monto);
+    void pagoTransferencia(String numCuenta, double monto);
+}
+
     
 }
