@@ -15,4 +15,11 @@ public class Cocina extends Usuario{
         this.cocinerosDisponibles = cocinerosDisponibles;
     }
 
+    private void cocinarPedido() {
+
+    }
+    private void entregarPedido() {
+
+    }
+
 }
