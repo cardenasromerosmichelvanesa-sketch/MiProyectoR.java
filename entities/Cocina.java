@@ -3,8 +3,7 @@ public class Cocina extends Usuario{
 
     private int cocinerosDisponibles;
 
-    public Cocina(int idUsuario, String nombre, String apellido, int cocinerosDisponibles) {
-        super(idUsuario, nombre, apellido);
+    public Cocina(int cocinerosDisponibles) {
         this.cocinerosDisponibles = cocinerosDisponibles;
     }
 
