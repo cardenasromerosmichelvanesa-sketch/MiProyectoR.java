@@ -1,7 +1,7 @@
 package entities;
 public class Pedido {
 
-    private Mesa mesa;
+    private int mesa;
     private String estado;
     private double monto;
 
@@ -11,7 +11,7 @@ public class Pedido {
         this.monto = monto;
     }
 
-    public Mesa getMesa() {
+    public int getMesa() {
         return mesa;
     }
 
