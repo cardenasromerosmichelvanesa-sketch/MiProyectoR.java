@@ -28,7 +28,7 @@ public class Cocina extends Usuario{
     }
     private void entregarPedido(Pedido PEDIDO) {
         System.out.println("La cocina termino el pedido");
-        PEDIDO.setEstado("Terminado");
+        PEDIDO.setEstado("Listo");
         cocinerosOcupados--;
     }
 
