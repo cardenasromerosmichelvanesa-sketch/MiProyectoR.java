@@ -1,43 +1,78 @@
-
-public class reporteVentasDAO {
-   
-    public List<Pedido> pedidoEntregado(Pedido PEDIDO, List<Pedido> reporte){
-        reporte.add(miMarca);
+import entities.Pedido;
+import java.util.List;
+public class ReporteDAO {
+    /**
+    * Metodo para agregar pedidos al registro
+    * @param Pedidio Pedido que se va a guardar en el registro
+    * @param reporte Lista del registro que se usa
+    * @return Retorna la lista que se uso como registro
+    */
+    public List<Pedido> registrarPedido(Pedido Pedido, List<Pedido> reporte) {
+        reporte.add(Pedido);
         return reporte;
     }
-    public Pedido buscarPedidoPorId(List<Pedido> reporte, String ID){
+
+    /**
+     * Método que permite buscar un pedido por id en el registro
+     * @param reporte Lista del registro que se usa
+     * @param id id del pedido a buscar
+     * @return El objeto de tipo pedido encontrado
+     */
+    public Pedido buscarPedidoPorId(List<Pedido> reporte, String id){
     Pedido encontrado = new Pedido();
     for(Pedido m: reporte){
-        if(m.getNombre().compareTo(ID)==0){
+        if(m.getId().compareTo(id)==0){
             encontrado = m;
             break;
         }
     }
     return encontrado;
     }
-    
-    public int buscarIndiceDeMarca(List<Pedido> reporte, String ID){
-    Pedido PEDIDO = new Pedido();
+
+    /**
+     * Método que permite obtener el índice de un objeto en la colección
+     * @param reporte Lista del registro que se usa
+     * @param id id del pedido a buscar
+     * @return el índice en la lista de registro
+     */
+    public int buscarIndiceDePedido(List<Pedido> reporte, String id){
+    Pedido encontrado = new Pedido();
     for(Pedido m: reporte){
-        if(m.getNombre().compareTo(ID)==0){
-            miMarca = m;
+        if(m.getId().compareTo(id)==0){
+            encontrado = m;
             break;
         }
     }
-    return reporte.indexOf(miMarca);
+    return reporte.indexOf(encontrado);
     }
-    public List<Pedido> actualizarMarca(Pedido miMarca, List<Pedido> reporte){
-       int indice = miMarca.getIdMarca() -1;
-        reporte.set(indice, miMarca);
-        return reporte;
-    }
-    public List<Pedido> eliminarMarca(String nombre, List<Pedido> reporte){
-        Pedido miMarca = buscarMarcaPorNombre(reporte, nombre);
-        reporte.remove(miMarca);
+
+    /**
+     * Método para actualizar un pedido
+     * @param pedido Pedido a actualizar
+     * @param newPedido Nuevos datos para pedido
+     * @param reporte Lista del registro que se usa
+     * @return 
+     */
+    public List<Pedido> actualizarPedido(Pedido pedido, Pedido newPedido , List<Pedido> reporte){
+        int indice = reporte.indexOf(pedido);
+        reporte.set(indice, newPedido);
         return reporte;
     }
     
-    public void verLista(List<Pedido> reporte){
+    /**
+     * Método para eliminar un pedido del registro
+     * @param id nombre de la marca a remover
+     * @param reporte colección de marcas
+     * @return la lista acualizada
+     */
+    public List<Pedido> eliminarMarca(String id, List<Pedido> reporte){
+        int indice = buscarIndiceDePedido(reporte, id);
+        reporte.remove(indice);
+        return reporte;
+    }
+    
+    public void verReporte(List<Pedido> reporte){
         System.out.println(reporte);
     }
+
 }

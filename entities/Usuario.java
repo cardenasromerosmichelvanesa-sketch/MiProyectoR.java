@@ -1,3 +1,4 @@
+package entities;
 public class Usuario {
 
     private int idUsuario;
@@ -10,10 +11,10 @@ public class Usuario {
         this.apellido = apellido;
     }
 
-    public int getIdUsuario() {
+    public int getIdo() {
         return idUsuario;
     }
-    public void setIdUsuario(int idUsuario) {
+    public void setId(int idUsuario) {
         this.idUsuario = idUsuario;
     }
 

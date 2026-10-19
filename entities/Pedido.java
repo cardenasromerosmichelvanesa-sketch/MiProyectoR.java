@@ -1,21 +1,35 @@
 package entities;
 public class Pedido {
 
+    private String id;
     private int mesa;
     private String estado;
     private double monto;
 
-    public Pedido(Mesa mesa, String estado, double monto) {
+    public Pedido(){
+        
+    }
+
+    public Pedido(String id, int mesa, String estado, double monto) {
+        this.id = id;
         this.mesa = mesa;
         this.estado = estado;
         this.monto = monto;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public int getMesa() {
         return mesa;
     }
 
-    public void setMesa(Mesa mesa) {
+    public void setMesa(int mesa) {
         this.mesa = mesa;
     }
 
