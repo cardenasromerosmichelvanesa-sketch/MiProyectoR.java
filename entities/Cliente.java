@@ -1,5 +1,5 @@
 
-package restaurante;
+package entities;
 
 public class Cliente {
     private String tipoContacto;
