@@ -4,7 +4,7 @@ package entities;
 public class Cliente {
     private String tipoContacto;
     private String ubicacion;
-
+    private String formaPago;
    
     public Cliente(String tipoContacto, String ubicacion) {
         this.tipoContacto = tipoContacto;
@@ -28,13 +28,18 @@ public class Cliente {
     }
 
     
-    public void formaPago(String forma) {
+     public void formaPago(String forma) {
+        this.formaPago = forma;
         System.out.println("El cliente paga con : " + forma);
     }
 
-   
     public void registra() {
-        System.out.println("Cliente se ha registrado correctamente");
+        System.out.println("Cliente se ha registrado correctamente en " + ubicacion);
+    }
+    
+    
+    public String toString() {
+        return "Cliente [Contacto=" + tipoContacto + ", Ubicacion=" + ubicacion + "]";
     }
 }
 

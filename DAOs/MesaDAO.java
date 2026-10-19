@@ -1,5 +1,5 @@
 
-package dao;
+package DAOs;
 import entities.Mesa;
 public class MesaDAO {
 
