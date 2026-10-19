@@ -8,17 +8,19 @@ package entities;
 public class Pedido {
 
     private String id;
-    private int mesa;
+    private Mesa mesa;
     private String estado;
     private double monto;
 
     /**
      * Constructor para crear un nuevo pedido
+     * @param id Identificador del pedido
      * @param mesa mesa donde se realiza el pedido
      * @param estado estado inicial del pedido 
      * @param monto monto total del pedido
      */
-    public Pedido(Mesa mesa, String estado, double monto) {
+    public Pedido(String id, Mesa mesa, String estado, double monto) {
+        this.id = id;
         this.mesa = mesa;
         this.estado = estado;
         this.monto = monto;
@@ -70,6 +72,14 @@ public class Pedido {
      */
     public void setMonto(double monto) {
         this.monto = monto;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
    
 }
