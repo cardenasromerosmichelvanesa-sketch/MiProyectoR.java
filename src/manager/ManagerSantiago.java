@@ -10,6 +10,7 @@ public class ManagerSantiago {
         
         Scanner tcl=new Scanner(System.in);
         
+        AdministradorDAO adminDAO=new AdministradorDAO();
         // Creación lista de empleados, menu y reporte
         List<Usuario> Empleados=null;
         List<Pedido> Reporte=null;
@@ -30,8 +31,26 @@ public class ManagerSantiago {
         Producto prod1=new Producto("ccom001", "Milanes", 3498.21, 2); Menu.add(prod1);
         Producto prod2=new Producto("ccom002", "Pata de caballo", 54849, 3); Menu.add(prod2);
 
+        //Primera función
         System.out.println("Ver el reporte de ventas");
-        
+        adminDAO.verReporteVentas(Reporte);
+
+        //Segunda función
+        adminDAO.meseroAsignadoMesas(mesa2, mesero2);
+        System.out.println(mesa2.getMesero());
+
+        //Tercera función
+        adminDAO.asignarMesa(pedido1, mesa2);
+        System.out.println(pedido1.getMesa());
+
+        //Cuarta función
+        adminDAO.setUsuarioApellido(admin1, "Fula");
+        System.out.println(admin1.getApellido());
+
+        //Quinta función
+        adminDAO.eliminarProductoMenu(Menu, prod2);
+        System.out.println(Menu);
+
 
     }
 
