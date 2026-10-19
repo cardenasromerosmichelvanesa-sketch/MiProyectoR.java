@@ -1,10 +1,10 @@
-
-package DAOs;
-import entities.Mesero;
-import entities.Mesa;
-import entities.Pedido;
+package src.DAOs;
 import java.util.ArrayList;
 import java.util.List;
+
+import src.entities.Mesa;
+import src.entities.Mesero;
+import src.entities.Pedido;
 
 /**
  * Se encarga de registrar, anotar y controlar la disponibilidad de los meseros.

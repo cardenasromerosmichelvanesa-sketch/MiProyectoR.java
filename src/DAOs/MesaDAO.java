@@ -1,8 +1,8 @@
-
-package DAOs;
-import entities.Mesa;
+package src.DAOs;
 import java.util.ArrayList;
 import java.util.List;
+
+import src.entities.Mesa;
 
 /**
  * Se encarga de guardar, buscar y liberar mesas en la base de datos.
@@ -68,7 +68,7 @@ public class MesaDAO {
      * @param numMesa número de la mesa
      * @param mesero mesero a asignar
      */
-    public void asignarMesero(int numMesa, entities.Mesero mesero) {
+    public void asignarMesero(int numMesa, src.entities.Mesero mesero) {
         Mesa mesa = buscarMesa(numMesa);
         if (mesa != null) {
             mesa.setMesero(mesero);

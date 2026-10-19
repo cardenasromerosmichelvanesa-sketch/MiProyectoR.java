@@ -1,7 +1,8 @@
-package DAOs;
-import entities.Pedido;
+package src.DAOs;
 import java.util.ArrayList;
 import java.util.List;
+
+import src.entities.Pedido;
 
 /**
  * Encargado de registrar, buscar, actualizar estado y listar pedidos.

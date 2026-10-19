@@ -1,5 +1,5 @@
 
-package entities;
+package src.entities;
 
 /**
  * Guarda que producto se pidió y en qué cantidad..

@@ -1,5 +1,4 @@
-package entities;
-import java.util.List;
+package src.entities;
 import java.util.List;
 public class Menu {
 

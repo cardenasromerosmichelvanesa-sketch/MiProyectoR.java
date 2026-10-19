@@ -1,13 +1,14 @@
+package src.DAOs;
 import java.util.List;
 
-import entities.*;
+import src.entities.*;
 public class AdministradorDAO {
     
     /**
      * Metodo para ver la lista usada para el reporte
      * @param reporte Lista usada para el reporte
      */
-    private void verReporteVentas(List<Pedido> reporte) {
+    public void verReporteVentas(List<Pedido> reporte) {
         System.out.println("|\t Id\t|\t Monto\t|");
         for (Pedido aux: reporte) {
             System.out.println("| "+aux.getId()+"\t|\t"+aux.getMonto()+"\t|");
@@ -19,14 +20,14 @@ public class AdministradorDAO {
      * @param mesa Mesa a la que se le asigna el mesero
      * @param mesero Mesero que sera asignado a la mesa
      */
-    private void meseroAsignadoMesas(Mesa mesa, Mesero mesero) {
+    public void meseroAsignadoMesas(Mesa mesa, Mesero mesero) {
         mesa.setMesero(mesero);
     }
     /**
      * Metodo para ver el listado de todas las mesas
      * @param mesas Lista que se usa para registrar las mesas
      */
-    private void verMesa(List<Mesa> mesas) {
+    public void verMesa(List<Mesa> mesas) {
         System.out.println(mesas);
     }
     /**
@@ -34,7 +35,7 @@ public class AdministradorDAO {
      * @param pedido Pedido destinado a la mesa
      * @param mesa Mesa a la que va el pedido
      */
-    private void asignarMesa(Pedido pedido, Mesa mesa) {
+    public void asignarMesa(Pedido pedido, Mesa mesa) {
         if (mesa.isDisponible()) {
             pedido.setMesa(mesa.getNumMesa());
             mesa.setDisponible(false);
@@ -50,7 +51,7 @@ public class AdministradorDAO {
      * @param usuario Empleado que se agrega a la lista
      * @return La lista usada mas el empleado nuevo
      */
-    private List<Usuario> añadirEmpleado(List<Usuario> empleados, Usuario usuario){
+    public List<Usuario> añadirEmpleado(List<Usuario> empleados, Usuario usuario){
         empleados.add(usuario);
         return empleados;
     }
@@ -60,7 +61,7 @@ public class AdministradorDAO {
      * @param usuario Empleado que se elimina de la lista
      * @return La lista usada menos el empleado eliminado
      */
-    private List<Usuario> eliminarEmpleado(List<Usuario> empleados, Usuario usuario){
+    public List<Usuario> eliminarEmpleado(List<Usuario> empleados, Usuario usuario){
         empleados.remove(usuario);
         return empleados;
     }
@@ -69,7 +70,7 @@ public class AdministradorDAO {
      * @param usuario Usuario al que se aplica el cambio
      * @param newId Nuevo id que reemplazara al antiguo
      */
-    private void setUsuarioId(Usuario usuario, int newId) {
+    public void setUsuarioId(Usuario usuario, int newId) {
         usuario.setId(newId);
     }
     /**
@@ -77,7 +78,7 @@ public class AdministradorDAO {
      * @param usuario Usuario al que se aplica el cambio
      * @param newNombre Nuevo nombre que reemplazara al antiguo
      */
-    private void setUsuarioNombre(Usuario usuario, String newNombre) {
+    public void setUsuarioNombre(Usuario usuario, String newNombre) {
         usuario.setNombre(newNombre);
     }
     /**
@@ -85,7 +86,7 @@ public class AdministradorDAO {
      * @param usuario Usuario al que se aplica el cambio
      * @param newApellido Nuevo apellido que reemplazara al antiguo
      */
-    private void setUsuarioApellido(Usuario usuario, String newApellido) {
+    public void setUsuarioApellido(Usuario usuario, String newApellido) {
         usuario.setApellido(newApellido);
     }
 
@@ -93,7 +94,7 @@ public class AdministradorDAO {
      * Metodo que muestra el tiempo de preparacion del producto
      * @param producto Producto del que se muestra el tiempo de preparación
      */
-    private void verTiempoPreparacion(Producto producto) {
+    public void verTiempoPreparacion(Producto producto) {
         producto.getTiempopre();
     }
     /**
@@ -101,7 +102,7 @@ public class AdministradorDAO {
      * @param producto Producto que sufrira el cambio en el tiemppo de preparación
      * @param tiempo Nuevo tiempo de preparación
      */
-    private void cambiarTiempoPreparacion(Producto producto, String tiempo){
+    public void cambiarTiempoPreparacion(Producto producto, String tiempo){
         producto.setTiempopre(tiempo);
     }
 
@@ -111,7 +112,7 @@ public class AdministradorDAO {
      * @param producto Producto agregado a la lista
      * @return Lista usada mas el nuevo producto
      */
-    private List<Producto> anadirProductoMenu(List<Producto> menu, Producto producto) {
+    public List<Producto> anadirProductoMenu(List<Producto> menu, Producto producto) {
         menu.add(producto);
         return menu;
     }
@@ -121,16 +122,45 @@ public class AdministradorDAO {
      * @param producto Producto a eliminar de la lista
      * @return Lista usada menos el producto enviado
      */
-    private List<Producto> eliminarProductoMenu(List<Producto> menu, Producto producto) {
+    public List<Producto> eliminarProductoMenu(List<Producto> menu, Producto producto) {
         menu.remove(producto);
         return menu;
     }
 
+    /**
+     * Metodo para ver cuantos cocineros tiene disponibles la cocina
+     * @param cocina Cocina en uso
+     */
+    public void verCocinerosDisponibles(Cocina cocina){
+        cocina.getCocinerosDisponibles();
+    }
+    /**
+     * Metodo para cambiar los cocineros disponible en cocina
+     * @param cocina Cocina en uso
+     * @param disponibles Nuevo numero de cocineros disponibles
+     */
+    public void setCocinerosDisponibles(Cocina cocina, int disponibles){
+        cocina.setCocinerosDisponibles(disponibles);
+    }
+    /**
+     * Metodo para ver cuantos cocineros tiene ocupados la cocina
+     * @param cocina Cocina en uso
+     */
+    public void verCocinerosOcupados(Cocina cocina){
+        cocina.getCocinerosOcupados();
+    }
+    /**
+     * Metodo para cambiar los cocineros ocupados en cocina
+     * @param cocina Cocina en uso
+     * @param ocupados Nuevo numero de cocineros ocupados
+     */
+    public void setCocinerosOcupados(Cocina cocina, int ocupados){
+        if (cocina.getCocinerosDisponibles()>ocupados && cocina.disponibilidad(cocina)) {
+            cocina.setCocinerosOcupados(ocupados);
+        }
+        else {
+            System.out.println("Error");
+        }
+    }
+
 }
-
-
-
-
-
-
-

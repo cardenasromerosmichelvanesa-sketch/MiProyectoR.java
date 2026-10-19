@@ -1,7 +1,8 @@
-package DAOs;
+package src.DAOs;
 import java.util.ArrayList;
 import java.util.List;
-import entities.Cliente;
+
+import src.entities.Cliente;
 /**
  * 1. Se corrigió el package: antes decía 'package dao;' y la carpeta se llama 'DAOs'
  * 2. Se agregó 'import entities.Cliente;' porque Cliente está en otro paquete y marcaba error en rojo

@@ -1,5 +1,6 @@
+package src.DAOs;
 import java.util.List;
-import entities.Producto;
+import src.entities.Producto;
 
 public class ProductoDAO {
     private List<Producto> listaProducto;

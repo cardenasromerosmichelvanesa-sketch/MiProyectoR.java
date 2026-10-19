@@ -1,13 +1,14 @@
-package manager;
+package src.manager;
 
 import DAOs.DetallePedidoDAO;
 import DAOs.MesaDAO;
 import DAOs.MeseroDAO;
 import DAOs.PedidoDAO;
-import entities.DetallePedido;
-import entities.Mesa;
-import entities.Pedido;
-import entities.Mesero;
+import src.entities.DetallePedido;
+import src.entities.Mesa;
+import src.entities.Mesero;
+import src.entities.Pedido;
+
 import java.util.Scanner;
 
 public class MiManagerMesero { 

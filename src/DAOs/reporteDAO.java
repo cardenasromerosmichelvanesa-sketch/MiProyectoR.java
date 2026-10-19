@@ -1,5 +1,6 @@
-import entities.Pedido;
+package src.DAOs;
 import java.util.List;
+import src.entities.Pedido;
 public class ReporteDAO {
     
     

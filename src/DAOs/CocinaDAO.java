@@ -1,5 +1,6 @@
-import entities.Cocina;
-import entities.Pedido;
+package src.DAOs;
+import src.entities.Cocina;
+import src.entities.Pedido;
 public class CocinaDAO {
 
     /**

@@ -1,11 +1,13 @@
-package entities;
+package src.entities;
+
+import java.util.List;
 
 /**
  * Esta clase es el mesero del restaurante.
  * Se encarga de gestionar las mesas y los pedidos de los clientes.
  * Aplica POO y encapsulamiento.
  */
-public class Mesero {
+public class Mesero extends Usuario{
   
     private boolean meseroDisponible;
 
@@ -13,7 +15,8 @@ public class Mesero {
      * Constructor del mesero
      * @param meseroDisponible true si está libre, false si está ocupado
      */
-    public Mesero(boolean meseroDisponible) {
+    public Mesero(int idUsuario, String nombre, String apellido, boolean meseroDisponible) {
+        super(idUsuario, nombre, apellido);
         this.meseroDisponible = meseroDisponible;
     }
 
@@ -44,7 +47,7 @@ public class Mesero {
             System.out.println("El mesero no está disponible");
             return null;
         }
-        Pedido pedido = new Pedido(mesa, "Pendiente", 0);
+        Pedido pedido = new Pedido();
         System.out.println("Pedido creado correctamente");
         return pedido;
     }
@@ -90,9 +93,10 @@ public class Mesero {
      * Cambia el estado del pedido a entregado
      * @param pedido pedido a entregar
      */
-    public void entregarPedido(Pedido pedido) {
-        if (pedido != null) {
+    public void entregarPedido(Pedido pedido, List<Pedido> Reporte) {
+        if (pedido != null && pedido.getEstado().compareTo("Listo")==0) {
             pedido.setEstado("Entregado");
+            Reporte.add(pedido);
             System.out.println("Pedido entregado");
         }
     }

@@ -1,5 +1,5 @@
 
-package entities;
+package src.entities;
 
 /**
  * Esta clase representa una mesa del restaurante

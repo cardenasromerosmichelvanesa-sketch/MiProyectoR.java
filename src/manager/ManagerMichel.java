@@ -1,4 +1,4 @@
-package manager;
+package src.manager;
 
 import dao.ProductoDAO;
 import dao.PagoDAO;

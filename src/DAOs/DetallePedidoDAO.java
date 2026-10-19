@@ -1,8 +1,8 @@
-
-package DAOs;
-import entities.DetallePedido;
+package src.DAOs;
 import java.util.ArrayList;
 import java.util.List;
+
+import src.entities.DetallePedido;
 
 /**
  * Esta clase se encarga de todo el acceso a datos de DetallePedido.

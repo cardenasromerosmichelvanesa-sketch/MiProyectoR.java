@@ -1,4 +1,4 @@
-package entities;
+package src.entities;
 
 /**
  * Esta clase representa un pedido realizado por un cliente.
@@ -12,6 +12,9 @@ public class Pedido {
     private String estado;
     private double monto;
 
+    public Pedido() {
+
+    }
     /**
      * Constructor para crear un nuevo pedido
      * @param id Identificador del pedido
@@ -36,10 +39,10 @@ public class Pedido {
 
     /**
      * Asigna una nueva mesa al pedido
-     * @param mesa nueva mesa
+     * @param int nueva mesa
      */
-    public void setMesa(Mesa mesa) {
-        this.mesa = mesa.getNumMesa();
+    public void setMesa(int mesa) {
+        this.mesa = mesa;
     }
 
     /**

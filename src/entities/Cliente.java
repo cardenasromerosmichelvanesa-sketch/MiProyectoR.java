@@ -1,5 +1,5 @@
 
-package entities;
+package src.entities;
 
 public class Cliente {
     private String tipoContacto;
