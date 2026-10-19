@@ -30,7 +30,7 @@ public class PedidoDAO {
      * Anota todos los pedidos registrados
      * @return lista completa de pedidos
      */
-    public List<Pedido> listarPedidos() {
+    public List<Pedido> listaPedidos() {
         return listaPedidos;
     }
 

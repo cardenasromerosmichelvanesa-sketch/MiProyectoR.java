@@ -56,7 +56,7 @@ public class DetallePedido {
      */
     @Override
     public String toString() {
-        return "DetallePedido{" + "idProducto=" + idProducto + ", cantidad=" + cantidad + '}';
+        return "DetallePedido{" + "idProducto " + idProducto + ", cantidad " + cantidad + '}';
     }
 }
 

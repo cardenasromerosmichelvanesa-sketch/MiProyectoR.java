@@ -28,10 +28,10 @@ public class MesaDAO {
     }
 
     /**
-     * Lista todas las mesas del restaurante
+     *Lista de todas las mesas del restaurante
      * @return lista de mesas
      */
-    public List<Mesa> listarMesas() {
+    public List<Mesa> ListaMesas() {
         return listaMesas;
     }
 
@@ -53,7 +53,7 @@ public class MesaDAO {
      * Obtiene solo las mesas disponibles
      * @return lista de mesas libres
      */
-    public List<Mesa> listarMesasDisponibles() {
+    public List<Mesa> MesasDisponibles() {
         List<Mesa> disponibles = new ArrayList<>();
         for (Mesa m : listaMesas) {
             if (m.isDisponible()) {

@@ -33,7 +33,7 @@ public class MeseroDAO {
      * anota todos los meseros registrados
      * @return lista de meseros
      */
-    public List<Mesero> listarMeseros() {
+    public List<Mesero> listaMeseros() {
         return listaMeseros;
     }
 
@@ -41,7 +41,7 @@ public class MeseroDAO {
      * anota solo los meseros disponibles
      * @return lista de meseros libres
      */
-    public List<Mesero> listarDisponibles() {
+    public List<Mesero> listaDisponibles() {
         List<Mesero> disponibles = new ArrayList<>();
         for (Mesero m : listaMeseros) {
             if (m.getMeseroDisponible()) {

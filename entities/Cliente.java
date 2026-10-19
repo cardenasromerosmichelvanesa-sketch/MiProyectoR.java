@@ -51,7 +51,7 @@ public class Cliente {
     
     
     public String toString() {
-        return "Cliente [Contacto=" + tipoContacto + ", Ubicacion=" + ubicacion + "]";
+        return "Cliente Contacto=" + tipoContacto + ", Ubicacion" + ubicacion;
     }
 }
 
