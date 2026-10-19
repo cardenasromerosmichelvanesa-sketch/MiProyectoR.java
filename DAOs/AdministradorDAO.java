@@ -104,7 +104,26 @@ public class AdministradorDAO {
         producto.setTiempoPreparacion();
     }
 
-    private void 
+    /**
+     * Metodo para añadir un producto a la lista menú
+     * @param menu Lista usada como menú
+     * @param producto Producto agregado a la lista
+     * @return Lista usada mas el nuevo producto
+     */
+    private List<Producto> anadirProductoMenu(List<Producto> menu, Producto producto) {
+        menu.add(producto);
+        return menu;
+    }
+    /**
+     * Metodo para eliminar un producto de la lista menú
+     * @param menu Lista usada como menú
+     * @param producto Producto a eliminar de la lista
+     * @return Lista usada menos el producto enviado
+     */
+    private List<Producto> eliminarProductoMenu(List<Producto> menu, Producto producto) {
+        menu.remove(producto);
+        return menu;
+    }
 
 }
 

@@ -1,21 +1,15 @@
 package entities;
-public class menú {
+import java.util.List;
+import java.util.List;
+public class Menu {
 
-    import java.util.ArrayList;
-    import java.util.List;
-
-   
     private String idProd;
-    private double precioProd;
     private List<Producto> listaProductos;
 
-
-    public void Menu(String idProd, double precioProd) {
+    public Menu(String idProd, List<Producto> listaProductos) {
         this.idProd = idProd;
-        this.precioProd = precioProd;
-        this.listaProductos = new ArrayList<>();
+        this.listaProductos = listaProductos;
     }
-
     
     public String getIdProd() {
         return idProd;
@@ -24,15 +18,6 @@ public class menú {
     public void setIdProd(String idProd) {
         this.idProd = idProd;
     }
-
-    public double getPrecioProd() {
-        return precioProd;
-    }
-
-    public void setPrecioProd(double precioProd) {
-        this.precioProd = precioProd;
-    }
-
 
     public void registrarProducto(Producto producto) {
         this.listaProductos.add(producto);
