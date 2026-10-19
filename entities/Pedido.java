@@ -1,7 +1,10 @@
-package entities;
+
+package restaurante;
+
+
 public class Pedido {
 
-    private int mesa;
+    private Mesa mesa;
     private String estado;
     private double monto;
 
@@ -11,7 +14,7 @@ public class Pedido {
         this.monto = monto;
     }
 
-    public int getMesa() {
+    public Mesa getMesa() {
         return mesa;
     }
 
@@ -36,3 +39,4 @@ public class Pedido {
     }
 }
     
+
