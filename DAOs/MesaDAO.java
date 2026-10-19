@@ -1,3 +1,5 @@
+
+package dao;
 import entities.Mesa;
 public class MesaDAO {
 
@@ -9,3 +11,4 @@ public class MesaDAO {
 
     }
 }
+    

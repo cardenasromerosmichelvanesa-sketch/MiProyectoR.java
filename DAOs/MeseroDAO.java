@@ -1,3 +1,5 @@
+
+package dao;
 import entities.Mesero;
 
 public class MeseroDAO {

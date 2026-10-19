@@ -1,16 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 
-/**
- *
- * @author salaG201
- */
 public class menú {
 
     import java.util.ArrayList;
-import java.util.List;
+    import java.util.List;
 
    
     private String idProd;
@@ -18,7 +10,7 @@ import java.util.List;
     private List<Producto> listaProductos;
 
 
-    public Menu(String idProd, double precioProd) {
+    public void Menu(String idProd, double precioProd) {
         this.idProd = idProd;
         this.precioProd = precioProd;
         this.listaProductos = new ArrayList<>();

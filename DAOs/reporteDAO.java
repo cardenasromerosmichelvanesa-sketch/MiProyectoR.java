@@ -1,11 +1,13 @@
 import entities.Pedido;
 import java.util.List;
 public class ReporteDAO {
+    
+    
     /**
-    * Metodo para agregar pedidos al registro
-    * @param Pedidio Pedido que se va a guardar en el registro
-    * @param reporte Lista del registro que se usa
-    * @return Retorna la lista que se uso como registro
+    * Metodo para agregar pedidos al reporte
+    * @param Pedidio Pedido que se va a guardar en el reporte
+    * @param reporte Lista del reporte que se usa
+    * @return Retorna la lista que se uso como reporte
     */
     public List<Pedido> registrarPedido(Pedido Pedido, List<Pedido> reporte) {
         reporte.add(Pedido);
@@ -13,8 +15,8 @@ public class ReporteDAO {
     }
 
     /**
-     * Método que permite buscar un pedido por id en el registro
-     * @param reporte Lista del registro que se usa
+     * Método que permite buscar un pedido por id en el reporte
+     * @param reporte Lista del reporte que se usa
      * @param id id del pedido a buscar
      * @return El objeto de tipo pedido encontrado
      */
@@ -31,9 +33,9 @@ public class ReporteDAO {
 
     /**
      * Método que permite obtener el índice de un objeto en la colección
-     * @param reporte Lista del registro que se usa
+     * @param reporte Lista del reporte que se usa
      * @param id id del pedido a buscar
-     * @return el índice en la lista de registro
+     * @return el índice en la lista de reporte
      */
     public int buscarIndiceDePedido(List<Pedido> reporte, String id){
     Pedido encontrado = new Pedido();
@@ -50,7 +52,7 @@ public class ReporteDAO {
      * Método para actualizar un pedido
      * @param pedido Pedido a actualizar
      * @param newPedido Nuevos datos para pedido
-     * @param reporte Lista del registro que se usa
+     * @param reporte Lista del reporte que se usa
      * @return 
      */
     public List<Pedido> actualizarPedido(Pedido pedido, Pedido newPedido , List<Pedido> reporte){
@@ -60,7 +62,7 @@ public class ReporteDAO {
     }
     
     /**
-     * Método para eliminar un pedido del registro
+     * Método para eliminar un pedido del reporte
      * @param id nombre de la marca a remover
      * @param reporte colección de marcas
      * @return la lista acualizada

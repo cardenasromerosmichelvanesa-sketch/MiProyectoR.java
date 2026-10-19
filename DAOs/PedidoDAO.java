@@ -1,3 +1,4 @@
+package dao;
 import entities.Pedido;
 public class PedidoDAO {
 

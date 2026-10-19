@@ -1,4 +1,6 @@
+
 package entities;
+
 public class Cliente {
     private String tipoContacto;
     private String ubicacion;
@@ -35,3 +37,9 @@ public class Cliente {
         System.out.println("Cliente se ha registrado correctamente");
     }
 }
+
+
+
+    
+    
+

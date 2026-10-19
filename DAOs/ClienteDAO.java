@@ -1,3 +1,4 @@
+package dao;
 import entities.Cliente;
 
 public class ClienteDAO { 
@@ -19,3 +20,4 @@ public class ClienteDAO {
 
     }
 }
+    

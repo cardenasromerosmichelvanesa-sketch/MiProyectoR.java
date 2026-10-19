@@ -1,4 +1,7 @@
+
 package entities;
+
+
 public class DetallePedido {
  
     private int idProducto;
@@ -26,3 +29,4 @@ public class DetallePedido {
         this.cantidad = cantidad;
     }
 }
+
