@@ -6,7 +6,7 @@ public class Producto {
     private String nombre;
     private double precio;
     private int cantidad;
-    private double tiempopre;
+    private String tiempopre;
 
     
     public Producto(String id, String nombre, double precio, int cantidad) {
@@ -48,6 +48,15 @@ public class Producto {
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
+
+    public String getTiempopre() {
+        return tiempopre;
+    }
+
+    public void setTiempopre(String tiempopre) {
+        this.tiempopre = tiempopre;
+    }
+
 }
     
 

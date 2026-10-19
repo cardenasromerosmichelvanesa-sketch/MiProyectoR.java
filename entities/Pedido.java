@@ -8,7 +8,7 @@ package entities;
 public class Pedido {
 
     private String id;
-    private Mesa mesa;
+    private int mesa;
     private String estado;
     private double monto;
 
@@ -19,7 +19,7 @@ public class Pedido {
      * @param estado estado inicial del pedido 
      * @param monto monto total del pedido
      */
-    public Pedido(String id, Mesa mesa, String estado, double monto) {
+    public Pedido(String id, int mesa, String estado, double monto) {
         this.id = id;
         this.mesa = mesa;
         this.estado = estado;
@@ -30,7 +30,7 @@ public class Pedido {
      * Obtiene la mesa asociada al pedido
      * @return objeto Mesa
      */
-    public Mesa getMesa() {
+    public int getMesa() {
         return mesa;
     }
 
@@ -39,7 +39,7 @@ public class Pedido {
      * @param mesa nueva mesa
      */
     public void setMesa(Mesa mesa) {
-        this.mesa = mesa;
+        this.mesa = mesa.getNumMesa();
     }
 
     /**

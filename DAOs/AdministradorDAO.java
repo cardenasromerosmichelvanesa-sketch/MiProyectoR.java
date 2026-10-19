@@ -94,14 +94,15 @@ public class AdministradorDAO {
      * @param producto Producto del que se muestra el tiempo de preparación
      */
     private void verTiempoPreparacion(Producto producto) {
-        producto.getTiempoPreparacion();
+        producto.getTiempopre();
     }
     /**
      * Metodo para cambiar el tiempo de preparacion de un producto
-     * @param producto
+     * @param producto Producto que sufrira el cambio en el tiemppo de preparación
+     * @param tiempo Nuevo tiempo de preparación
      */
-    private void cambiarTiempoPreparacion(Producto producto){
-        producto.setTiempoPreparacion();
+    private void cambiarTiempoPreparacion(Producto producto, String tiempo){
+        producto.setTiempopre(tiempo);
     }
 
     /**

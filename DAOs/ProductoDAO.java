@@ -1,32 +1,29 @@
-package dao;
-
-import model.Productos;
-import java.util.ArrayList;
 import java.util.List;
+import entities.Producto;
 
-public class ProductosDAO {
-    private List<Productos> listaProductos = new ArrayList<>();
+public class ProductoDAO {
+    private List<Producto> listaProducto;
 
-    public void crear(Productos p) {
-        listaProductos.add(p);
+    public void crear(Producto p) {
+        listaProducto.add(p);
     }
 
-    public List<Productos> obtenerTodos() {
-        return listaProductos;
+    public List<Producto> obtenerTodos() {
+        return listaProducto;
     }
 
-    public Productos obtenerPorId(int id) {
-        for (Productos p : listaProductos) {
-            if (p.getId() == id) return p;
+    public Producto obtenerPorId(String id) {
+        for (Producto p : listaProducto) {
+            if (p.getId().compareTo(id)==0) return p;
         }
         return null;
     }
 
   
-    public boolean actualizar(Productos pModificado) {
-        for (int i = 0; i < listaProductos.size(); i++) {
-            if (listaProductos.get(i).getId() == pModificado.getId()) {
-                listaProductos.set(i, pModificado);
+    public boolean actualizar(Producto pModificado) {
+        for (int i = 0; i < listaProducto.size(); i++) {
+            if (listaProducto.get(i).getId() == pModificado.getId()) {
+                listaProducto.set(i, pModificado);
                 return true;
             }
         }
@@ -34,7 +31,7 @@ public class ProductosDAO {
     }
 
 
-    public boolean eliminar(int id) {
-        return listaProductos.removeIf(p -> p.getId() == id);
+    public boolean eliminar(String id) {
+        return listaProducto.removeIf(p -> p.getId().compareTo(id)==0);
     }
 }
