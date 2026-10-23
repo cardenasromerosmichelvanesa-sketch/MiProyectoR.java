@@ -48,7 +48,7 @@ public class ManagerMichel {
                 String nombre = sc.nextLine();
                 System.out.print("Precio: ");
                 double precio = sc.nextDouble();
-                System.out.print("Cantidad (Stock): ");
+                System.out.print("Cantidad: ");
                 int cantidad = sc.nextInt();
                 
                 productoDAO.crear(new Producto(id, nombre, precio, cantidad));
@@ -68,7 +68,7 @@ public class ManagerMichel {
             case 4:
                 System.out.print("ID del producto a eliminar: ");
                 boolean eliminado = productoDAO.eliminar(sc.nextInt());
-                System.out.println(eliminado ? "¡Producto eliminado!" : "No se encontró el ID");
+                System.out.println(eliminado ? "Producto eliminado" : "No se encontró el ID");
                 break;
             default:
                 System.out.println("Opción no válida.");
@@ -126,7 +126,7 @@ public class ManagerMichel {
             int nuevaCant = sc.nextInt();
             p.setCantidad(nuevaCant);
             productoDAO.actualizar(p);
-            System.out.println("Stock actualizado correctamente");
+            System.out.println("Se actualizó...");
         } else {
             System.out.println("Error: Producto no encontrado.");
         }
@@ -191,11 +191,11 @@ public class ManagerMichel {
         int op;
         do {
            
-            System.out.println("    MÓDULO MICHEL  FUNCIONALIDADES     ");
+            System.out.println(" MICHEL  FUNCIONALIDADES     ");
           System.out.println("1. CRUD Productos");
             System.out.println("2. Modificar Producto");
             System.out.println("3. Consultar Precios");
-            System.out.println("4. Controlar Cantidades (Stock)");
+            System.out.println("4. Controlar Cantidades");
             System.out.println("5. Procesar Pago");
             System.out.println("0. Volver al Menú Principal del Sistema");
             System.out.print("Seleccione una opción: ");
