@@ -1,27 +1,31 @@
 package src.entities;
 public class Producto {
-
-    
-    private String id;
+    private int id;
     private String nombre;
     private double precio;
     private int cantidad;
-    private String tiempopre;
 
-    
-    public Producto(String id, String nombre, double precio, int cantidad) {
+    /**
+     * Constructor para inicializar un objeto Producto.
+     * 
+     * @param id Identificador único del producto
+     * @param nombre Nombre comercial del producto
+     * @param precio Precio unitario de venta
+     * @param cantidad Cantidad disponible en inventario
+     */
+    public Producto(int id, String nombre, double precio, int cantidad) {
         this.id = id;
         this.nombre = nombre;
         this.precio = precio;
         this.cantidad = cantidad;
     }
 
-    
-    public String getId() {
+    // Métodos getters y setters
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -49,14 +53,9 @@ public class Producto {
         this.cantidad = cantidad;
     }
 
-    public String getTiempopre() {
-        return tiempopre;
+    @Override
+    public String toString() {
+        return String.format("ID: %d | Producto: %-15s | Precio: $%.2f | Stock: %d", 
+                id, nombre, precio, cantidad);
     }
-
-    public void setTiempopre(String tiempopre) {
-        this.tiempopre = tiempopre;
-    }
-
 }
-    
-
