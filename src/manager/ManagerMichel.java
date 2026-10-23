@@ -27,7 +27,7 @@ public class ManagerMichel {
 
         // Datos iniciales de prueba para el menú del restaurante
         productoDAO.crear(new Producto(1, "Hamburguesa Poli", 18000, 20));
-        productoDAO.crear(new Producto(2, "Gaseosa 500ml", 4500, 50));
+        productoDAO.crear(new Producto(2, "Gaseosa cocacola original", 4500, 50));
         productoDAO.crear(new Producto(3, "Papas Medianas", 6000, 30));
     }
   
@@ -113,9 +113,4 @@ public class ManagerMichel {
         return resultado;
     }
 
-    /** metodo auxiliar para el historial general de productos seleccionados
-  */
-    public List<String> obtenerHistorialPagos() {
-        return pagoDAO.obtenerHistorial();
-    }
-}
+  
