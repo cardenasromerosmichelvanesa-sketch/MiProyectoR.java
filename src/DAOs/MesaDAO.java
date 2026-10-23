@@ -1,8 +1,10 @@
 package src.DAOs;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import src.entities.Mesa;
+import src.entities.Mesero;
 
 /**
  * Se encarga de guardar, buscar y liberar mesas en la base de datos.
@@ -17,14 +19,17 @@ public class MesaDAO {
      * @return true si se registró correctamente
      */
     public boolean registrarMesa(Mesa mesa) {
-        try {
-            listaMesas.add(mesa);
-            System.out.println("Mesa " + mesa.getNumMesa() + " registrada");
-            return true;
-        } catch (Exception e) {
-            System.out.println("Error al registrar mesa: " + e.getMessage());
+        if (mesa == null) {
+            System.out.println("Error al registrar mesa: la mesa es nula");
             return false;
         }
+        if (buscarMesa(mesa.getNumMesa()) != null) {
+            System.out.println("Error: ya existe la mesa " + mesa.getNumMesa());
+            return false;
+        }
+        listaMesas.add(mesa);
+        System.out.println("Mesa " + mesa.getNumMesa() + " registrada (capacidad: " + mesa.getCapacidad() + ")");
+        return true;
     }
 
     /**
@@ -68,11 +73,56 @@ public class MesaDAO {
      * @param numMesa número de la mesa
      * @param mesero mesero a asignar
      */
-    public void asignarMesero(int numMesa, src.entities.Mesero mesero) {
+    public void asignarMesero(int numMesa, Mesero mesero) {
         Mesa mesa = buscarMesa(numMesa);
         if (mesa != null) {
             mesa.setMesero(mesero);
             System.out.println("Mesero asignado a mesa " + numMesa);
+        } else {
+            System.out.println("No existe la mesa " + numMesa);
+        }
+    }
+
+    /**
+     * Mesas disponibles donde caben cierta cantidad de personas
+     * @param personas cantidad de personas del grupo
+     * @return lista de mesas libres con capacidad suficiente
+     */
+    public List<Mesa> mesasParaPersonas(int personas) {
+        List<Mesa> resultado = new ArrayList<>();
+        for (Mesa m : listaMesas) {
+            if (m.isDisponible() && m.puedeAcomodar(personas)) {
+                resultado.add(m);
+            }
+        }
+        return resultado;
+    }
+
+    /**
+     * Pide por consola el número de mesa y la capacidad de personas,
+     * crea la mesa y la registra.
+     * @param sc Scanner para leer del teclado
+     * @return true si la mesa se registró
+     */
+    public boolean crearMesaPidiendoDatos(Scanner sc) {
+        int num = leerEntero(sc, "Número de la mesa: ");
+        int capacidad = leerEntero(sc, "¿Cuántas personas caben en la mesa (capacidad)? ");
+        while (capacidad <= 0) {
+            System.out.println("La capacidad debe ser mayor que 0");
+            capacidad = leerEntero(sc, "¿Cuántas personas caben en la mesa (capacidad)? ");
+        }
+        return registrarMesa(new Mesa(num, capacidad));
+    }
+
+    private int leerEntero(Scanner sc, String mensaje) {
+        while (true) {
+            System.out.print(mensaje);
+            String linea = sc.nextLine().trim();
+            try {
+                return Integer.parseInt(linea);
+            } catch (NumberFormatException e) {
+                System.out.println("Ingresa un número entero válido");
+            }
         }
     }
 }

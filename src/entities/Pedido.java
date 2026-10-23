@@ -2,7 +2,7 @@ package src.entities;
 
 /**
  * Esta clase representa un pedido realizado por un cliente.
- * Contiene la mesa, el estado del pedido y el monto total.
+ * Contiene el número de mesa, el estado del pedido y el monto total.
  * Se relaciona con Mesa y DetallePedido.
  */
 public class Pedido {
@@ -12,14 +12,19 @@ public class Pedido {
     private String estado;
     private double monto;
 
+    /**
+     * Crea un pedido vacío con estado inicial "Pendiente"
+     * (antes quedaba en null y provocaba NullPointerException).
+     */
     public Pedido() {
-
+        this.estado = "Pendiente";
     }
+
     /**
      * Constructor para crear un nuevo pedido
      * @param id Identificador del pedido
-     * @param mesa mesa donde se realiza el pedido
-     * @param estado estado inicial del pedido 
+     * @param mesa número de la mesa donde se realiza el pedido
+     * @param estado estado inicial del pedido
      * @param monto monto total del pedido
      */
     public Pedido(String id, int mesa, String estado, double monto) {
@@ -30,8 +35,8 @@ public class Pedido {
     }
 
     /**
-     * Obtiene la mesa asociada al pedido
-     * @return objeto Mesa
+     * Obtiene el número de la mesa asociada al pedido
+     * @return número de mesa
      */
     public int getMesa() {
         return mesa;
@@ -39,7 +44,7 @@ public class Pedido {
 
     /**
      * Asigna una nueva mesa al pedido
-     * @param int nueva mesa
+     * @param mesa número de la nueva mesa
      */
     public void setMesa(int mesa) {
         this.mesa = mesa;
@@ -47,7 +52,7 @@ public class Pedido {
 
     /**
      * Obtiene el estado actual del pedido
-     * @return estado (Pendiente, En preparación, Entregado)
+     * @return estado (Pendiente, En preparación, Listo, Entregado)
      */
     public String getEstado() {
         return estado;
@@ -71,9 +76,12 @@ public class Pedido {
 
     /**
      * Asigna un nuevo monto al pedido
-     * @param monto nuevo monto total
+     * @param monto nuevo monto total (no puede ser negativo)
      */
     public void setMonto(double monto) {
+        if (monto < 0) {
+            throw new IllegalArgumentException("El monto no puede ser negativo");
+        }
         this.monto = monto;
     }
 
@@ -84,6 +92,9 @@ public class Pedido {
     public void setId(String id) {
         this.id = id;
     }
-   
+
+    @Override
+    public String toString() {
+        return "Pedido{id=" + id + ", mesa=" + mesa + ", estado=" + estado + ", monto=" + monto + "}";
+    }
 }
-    

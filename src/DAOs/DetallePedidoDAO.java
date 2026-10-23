@@ -18,14 +18,13 @@ public class DetallePedidoDAO  {
      * @return true si se guardó correctamente
      */
     public boolean registrar(DetallePedido detalle) {
-        try {
-            listaDetalles.add(detalle);
-            System.out.println("Detalle registrado: Producto " + detalle.getIdProducto() + " Cantidad: " + detalle.getCantidad());
-            return true;
-        } catch (Exception e) {
-            System.out.println("Error al registrar detalle: " + e.getMessage());
+        if (detalle == null) {
+            System.out.println("Error al registrar detalle: el detalle es nulo");
             return false;
         }
+        listaDetalles.add(detalle);
+        System.out.println("Detalle registrado: Producto " + detalle.getIdProducto() + " Cantidad: " + detalle.getCantidad());
+        return true;
     }
 
     /**
@@ -57,7 +56,11 @@ public class DetallePedidoDAO  {
      */
     public void actualizarCantidad(int idProducto, int nuevaCantidad) {
         DetallePedido detalle = buscarPorIdProducto(idProducto);
-        if (detalle != null) {
+        if (detalle == null) {
+            System.out.println("No existe detalle para el producto " + idProducto);
+        } else if (nuevaCantidad <= 0) {
+            System.out.println("La cantidad debe ser mayor que 0");
+        } else {
             detalle.setCantidad(nuevaCantidad);
             System.out.println("Cantidad actualizada");
         }

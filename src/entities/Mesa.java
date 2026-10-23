@@ -1,25 +1,41 @@
-
 package src.entities;
 
 /**
- * Esta clase representa una mesa del restaurante
- * Aplica encapsulamiento con atributos privados y getters/setters
+ * Esta clase representa una mesa del restaurante.
+ * Aplica encapsulamiento con atributos privados y getters/setters.
  */
 public class Mesa {
 
     private int numMesa;
+    private int capacidad;
     private boolean disponible;
     private Mesero mesero;
 
     /**
+     * Constructor principal: la mesa exige su capacidad de personas.
      * @param numMesa número identificador de la mesa
+     * @param capacidad cuántas personas caben en la mesa (mayor que 0)
+     * @throws IllegalArgumentException si la capacidad no es válida
      */
-    public Mesa(int numMesa) {
+    public Mesa(int numMesa, int capacidad) {
+        if (capacidad <= 0) {
+            throw new IllegalArgumentException("La capacidad debe ser mayor que 0");
+        }
         this.numMesa = numMesa;
+        this.capacidad = capacidad;
         this.disponible = true;
         this.mesero = null;
     }
-    
+
+    /**
+     * Constructor de compatibilidad con código anterior (ej. los managers).
+     * Usa una capacidad por defecto de 4 personas.
+     * @param numMesa número identificador de la mesa
+     */
+    public Mesa(int numMesa) {
+        this(numMesa, 4);
+    }
+
     /**
      * Obtiene el número de la mesa
      * @return número de mesa
@@ -34,6 +50,35 @@ public class Mesa {
      */
     public void setNumMesa(int numMesa) {
         this.numMesa = numMesa;
+    }
+
+    /**
+     * Obtiene la capacidad de personas de la mesa
+     * @return capacidad máxima de personas
+     */
+    public int getCapacidad() {
+        return capacidad;
+    }
+
+    /**
+     * Cambia la capacidad de personas de la mesa
+     * @param capacidad nueva capacidad (mayor que 0)
+     * @throws IllegalArgumentException si la capacidad no es válida
+     */
+    public void setCapacidad(int capacidad) {
+        if (capacidad <= 0) {
+            throw new IllegalArgumentException("La capacidad debe ser mayor que 0");
+        }
+        this.capacidad = capacidad;
+    }
+
+    /**
+     * Verifica si en la mesa caben cierta cantidad de personas
+     * @param personas cantidad de personas
+     * @return true si personas está entre 1 y la capacidad
+     */
+    public boolean puedeAcomodar(int personas) {
+        return personas > 0 && personas <= capacidad;
     }
 
     /**
@@ -61,19 +106,16 @@ public class Mesa {
     }
 
     /**
-     * Asigna un mesero a la mesa y la marca como ocupada
-     * @param mesero mesero que atenderá la mesa
+     * Asigna un mesero a la mesa. Si se asigna uno, la mesa queda ocupada.
+     * @param mesero mesero que atenderá la mesa (null para quitarlo)
      */
     public void setMesero(Mesero mesero) {
         this.mesero = mesero;
-       /**
-        * Si se asigna mesero, la mesa ya no está disponible
-        */
         if (mesero != null) {
             this.disponible = false;
         }
     }
-    
+
     /**
      * Libera la mesa, la deja disponible y sin mesero
      */
@@ -81,5 +123,11 @@ public class Mesa {
         this.disponible = true;
         this.mesero = null;
         System.out.println("Mesa " + numMesa + " liberada");
+    }
+
+    @Override
+    public String toString() {
+        return "Mesa " + numMesa + " (capacidad: " + capacidad + ", "
+                + (disponible ? "disponible" : "ocupada") + ")";
     }
 }

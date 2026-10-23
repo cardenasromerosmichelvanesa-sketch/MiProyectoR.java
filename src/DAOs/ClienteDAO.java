@@ -22,6 +22,10 @@ public class ClienteDAO {
         /**
          *  el DAO guarda y delega la lógica a la entidad
          */
+        if (cliente == null) {
+            System.out.println("El cliente es nulo");
+            return;
+        }
         listaClientes.add(cliente);
         cliente.registra();
     }
@@ -34,10 +38,13 @@ public class ClienteDAO {
         /**
          * verificamos que la posición exista antes de editar
          */
-        if (posicion >= 0 && posicion < listaClientes.size()) {
+        if (clienteNuevo != null && posicion >= 0 && posicion < listaClientes.size()) {
             Cliente actual = listaClientes.get(posicion);
             actual.setTipoContacto(clienteNuevo.getTipoContacto());
             actual.setUbicacion(clienteNuevo.getUbicacion());
+            if (clienteNuevo.getFormaPago() != null) {
+                actual.formaPago(clienteNuevo.getFormaPago());
+            }
         }
     }
 

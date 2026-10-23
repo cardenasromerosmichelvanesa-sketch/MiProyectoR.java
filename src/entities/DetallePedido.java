@@ -1,22 +1,22 @@
-
 package src.entities;
 
 /**
- * Guarda que producto se pidió y en qué cantidad..
+ * Guarda qué producto se pidió y en qué cantidad.
  */
 public class DetallePedido {
- 
+
     private int idProducto;
     private int cantidad;
 
     /**
      * Constructor para crear un nuevo detalle de pedido
      * @param idProducto id del producto que se pidió
-     * @param cantidad cantidad de ese producto
+     * @param cantidad cantidad de ese producto (mayor que 0)
+     * @throws IllegalArgumentException si la cantidad no es válida
      */
     public DetallePedido(int idProducto, int cantidad) {
         this.idProducto = idProducto;
-        this.cantidad = cantidad;
+        setCantidad(cantidad);
     }
 
     /**
@@ -34,7 +34,7 @@ public class DetallePedido {
     public void setIdProducto(int idProducto) {
         this.idProducto = idProducto;
     }
-    
+
     /**
      * Obtiene la cantidad pedida
      * @return cantidad
@@ -45,18 +45,21 @@ public class DetallePedido {
 
     /**
      * Asigna la cantidad pedida
-     * @param cantidad nueva cantidad
+     * @param cantidad nueva cantidad (mayor que 0)
+     * @throws IllegalArgumentException si la cantidad es 0 o negativa
      */
     public void setCantidad(int cantidad) {
+        if (cantidad <= 0) {
+            throw new IllegalArgumentException("La cantidad debe ser mayor que 0");
+        }
         this.cantidad = cantidad;
     }
-    
+
     /**
      * Muestra la información del detalle
      */
     @Override
     public String toString() {
-        return "DetallePedido{" + "idProducto " + idProducto + ", cantidad " + cantidad + '}';
+        return "DetallePedido{idProducto=" + idProducto + ", cantidad=" + cantidad + "}";
     }
 }
-

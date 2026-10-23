@@ -1,2 +1,0 @@
-# MiProyectoR.java
-Descripción descriptiva

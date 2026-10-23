@@ -12,6 +12,8 @@ import src.entities.Pedido;
 public class MeseroDAO {
 
     private List<Mesero> listaMeseros = new ArrayList<>();
+    /** Pedidos entregados (el Mesero los agrega al entregar) */
+    private List<Pedido> reporte = new ArrayList<>();
 
     /**
      * Registra un nuevo mesero en el sistema
@@ -19,14 +21,13 @@ public class MeseroDAO {
      * @return true si se registró correctamente
      */
     public boolean registrarMesero(Mesero mesero) {
-        try {
-            listaMeseros.add(mesero);
-            System.out.println("Mesero registrado correctamente");
-            return true;
-        } catch (Exception e) {
-            System.out.println("Error al registrar mesero: " + e.getMessage());
+        if (mesero == null) {
+            System.out.println("Error al registrar mesero: el mesero es nulo");
             return false;
         }
+        listaMeseros.add(mesero);
+        System.out.println("Mesero registrado correctamente");
+        return true;
     }
 
     /**
@@ -56,6 +57,10 @@ public class MeseroDAO {
      * @param mesa mesa a asignar
      */
     public void asignarMesa(Mesa mesa) {
+        if (mesa == null) {
+            System.out.println("Mesa inválida");
+            return;
+        }
         for (Mesero m : listaMeseros) {
             if (m.getMeseroDisponible()) {
                 m.asignarMesa(mesa);
@@ -87,7 +92,16 @@ public class MeseroDAO {
      */
     public void entregarPedido(Mesero mesero, Pedido pedido) {
         if (mesero != null && pedido != null) {
-            mesero.entregarPedido(pedido);
+            // Mesero.entregarPedido necesita también la lista de reporte
+            mesero.entregarPedido(pedido, reporte);
         }
+    }
+
+    /**
+     * Pedidos que ya fueron entregados
+     * @return lista de pedidos entregados
+     */
+    public List<Pedido> getReporte() {
+        return reporte;
     }
 }

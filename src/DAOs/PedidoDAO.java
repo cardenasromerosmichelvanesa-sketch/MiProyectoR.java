@@ -17,14 +17,14 @@ public class PedidoDAO {
      * @return true si se guardó bien
      */
     public boolean registrarPedido(Pedido pedido) {
-        try {
-            listaPedidos.add(pedido);
-            System.out.println("Pedido registrado para mesa " + pedido.getMesa().getNumMesa());
-            return true;
-        } catch (Exception e) {
-            System.out.println("Error al registrar pedido: " + e.getMessage());
+        if (pedido == null) {
+            System.out.println("Error al registrar pedido: el pedido es nulo");
             return false;
         }
+        listaPedidos.add(pedido);
+        // getMesa() devuelve un int (número de mesa), no un objeto Mesa
+        System.out.println("Pedido registrado para mesa " + pedido.getMesa());
+        return true;
     }
 
     /**
@@ -43,7 +43,7 @@ public class PedidoDAO {
     public List<Pedido> buscarPorEstado(String estado) {
         List<Pedido> resultado = new ArrayList<>();
         for (Pedido p : listaPedidos) {
-            if (p.getEstado().equalsIgnoreCase(estado)) {
+            if (p.getEstado() != null && p.getEstado().equalsIgnoreCase(estado)) {
                 resultado.add(p);
             }
         }

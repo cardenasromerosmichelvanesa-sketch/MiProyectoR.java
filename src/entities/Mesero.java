@@ -47,7 +47,11 @@ public class Mesero extends Usuario{
             System.out.println("El mesero no está disponible");
             return null;
         }
-        Pedido pedido = new Pedido();
+        if (mesa == null) {
+            System.out.println("Se necesita una mesa para crear el pedido");
+            return null;
+        }
+        Pedido pedido = new Pedido("ped" + System.currentTimeMillis(), mesa.getNumMesa(), "Pendiente", 0.0);
         System.out.println("Pedido creado correctamente");
         return pedido;
     }
@@ -59,7 +63,7 @@ public class Mesero extends Usuario{
      * @param cantidad cantidad a agregar
      */
     public void agregarProductos(Pedido pedido, int idProducto, int cantidad) {
-        if (pedido != null) {
+        if (pedido != null && cantidad > 0) {
             DetallePedido detalle = new DetallePedido(idProducto, cantidad);
             System.out.println("Producto agregado");
             System.out.println("ID Producto: " + detalle.getIdProducto());
@@ -80,9 +84,10 @@ public class Mesero extends Usuario{
      * @param mesa mesa a asignar
      */
     public void asignarMesa(Mesa mesa) {
-        if (mesa.isDisponible()) {
+        if (mesa == null) {
+            System.out.println("Mesa inválida");
+        } else if (mesa.isDisponible()) {
             mesa.setMesero(this);
-            mesa.setDisponible(false);
             System.out.println("Mesa " + mesa.getNumMesa() + " asignada al mesero");
         } else {
             System.out.println("La mesa no está disponible");
@@ -94,10 +99,14 @@ public class Mesero extends Usuario{
      * @param pedido pedido a entregar
      */
     public void entregarPedido(Pedido pedido, List<Pedido> Reporte) {
-        if (pedido != null && pedido.getEstado().compareTo("Listo")==0) {
+        if (pedido != null && "Listo".equalsIgnoreCase(pedido.getEstado())) {
             pedido.setEstado("Entregado");
-            Reporte.add(pedido);
+            if (Reporte != null) {
+                Reporte.add(pedido);
+            }
             System.out.println("Pedido entregado");
+        } else {
+            System.out.println("El pedido no está listo para entregar");
         }
     }
 }
