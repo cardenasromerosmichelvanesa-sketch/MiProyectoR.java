@@ -1,5 +1,5 @@
 
-package 
+package src.vista;
 public class PagoEfectivo implements FormaPago {
 
     @Override
