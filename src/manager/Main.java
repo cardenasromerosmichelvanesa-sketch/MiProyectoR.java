@@ -7,6 +7,7 @@ public class Main {
         ManagerFelipe managerFelipe = new ManagerFelipe();
         ManagerSantiago managerSantiago = new ManagerSantiago();
         System.out.println("Elige el manager que vas a usar ");
+        System.out.println("Opciones: 1.Manager de Felipe, 2.Manager de Michel,  3.Manager de Santiago");
         int opcion = sc.nextInt();
     switch(opcion) {
             case 1:
