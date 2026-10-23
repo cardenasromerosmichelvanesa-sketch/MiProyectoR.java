@@ -18,102 +18,212 @@ import java.util.List;
  */
 public class ManagerMichel {
 
-    private ProductoDAO productoDAO;
-    private PagoDAO pagoDAO;
-
-    public ManagerMichel() {
-        this.productoDAO = new ProductoDAO();
-        this.pagoDAO = new PagoDAO();
-
-        // Datos iniciales de prueba para el menú del restaurante
-        productoDAO.crear(new Producto(1, "Hamburguesa Poli", 18000, 20));
-        productoDAO.crear(new Producto(2, "Gaseosa cocacola original", 4500, 50));
-        productoDAO.crear(new Producto(3, "Papas Medianas", 6000, 30));
-    }
-  
+    
     /**
-  * método que realiza la función 1 registrarProducto
-  * registra según los datos ingresados por el cliente
-  * param id Id persona
-  * param nombre Nombre persona 
-  * param precio Precio producto
-  * param cantidad Cantidad Productos 
-  */
+     * DAOs para gestionar la persistencia en memoria de productos y pagos
+     */
+    private ProductoDAO productoDAO = new ProductoDAO();
+    private PagoDAO pagoDAO = new PagoDAO();
     
-    public void registrarProducto(int id, String nombre, double precio, int cantidad) {
-        Producto nuevo = new Producto(id, nombre, precio, cantidad);
-        productoDAO.crear(nuevo);
-        System.out.println("Producto registrado correctamente.");
-    }
-      /**
-  * método que realiza la función 2 modificar producto
-  * modifica según eleción del cliente
-  * param id Id peroducto
-  * param nuevoNombre nombre del producto 
-  * param nuevoPrecio Precio producto
-  * param nuevaCantidad Cantidad Productos 
-  */
+    /**
+     * Scanner para leer las opciones del usuario por consola
+     */
+    private Scanner sc = new Scanner(System.in);
 
-  
-  public boolean modificarProducto(int id, String nuevoNombre, double nuevoPrecio, int nuevaCantidad) {
-        Producto actualizado = new Producto(id, nuevoNombre, nuevoPrecio, nuevaCantidad);
-        boolean exito = productoDAO.actualizar(actualizado);
-        if (exito) {
-            System.out.println("Producto actualizado correctamente.");
+    /**
+     * Funcionalidad 1: CRUD Producto
+     * Permite registrar, listar, buscar y eliminar productos.
+     */
+    public void crudProducto() {
+        System.out.println(" FUNCIONALIDAD 1: ");
+        System.out.println("1. Registrar 2. Listar  3. Buscar  4. Eliminar");
+        System.out.print("Opcion: ");
+        int op = sc.nextInt();
+        switch(op) {
+            case 1:
+                System.out.print("ID Producto: ");
+                int id = sc.nextInt();
+                sc.nextLine(); // limpiar buffer
+                System.out.print("Nombre: ");
+                String nombre = sc.nextLine();
+                System.out.print("Precio: ");
+                double precio = sc.nextDouble();
+                System.out.print("Cantidad (Stock): ");
+                int cantidad = sc.nextInt();
+                
+                productoDAO.crear(new Producto(id, nombre, precio, cantidad));
+                System.out.println("¡Producto registrado con éxito!");
+                break;
+            case 2:
+                System.out.println("Total de productos en inventario: " + productoDAO.obtenerTodos().size());
+                for (Producto p : productoDAO.obtenerTodos()) {
+                    System.out.println(p);
+                }
+                break;
+            case 3:
+                System.out.print("ID del producto a buscar: ");
+                Producto p = productoDAO.obtenerPorId(sc.nextInt());
+                System.out.println(p != null ? "Encontrado: " + p : "El producto no existe");
+                break;
+            case 4:
+                System.out.print("ID del producto a eliminar: ");
+                boolean eliminado = productoDAO.eliminar(sc.nextInt());
+                System.out.println(eliminado ? "¡Producto eliminado!" : "No se encontró el ID");
+                break;
+            default:
+                System.out.println("Opción no válida.");
+        }
+    }
+
+    /**
+     * Funcionalidad 2: Modificar producto
+     * Actualiza los datos de un producto existente.
+     */
+    public void modificarProducto() {
+        System.out.println(" FUNCIONALIDAD 2: MODIFICAR PRODUCTO");
+        System.out.print("Ingrese el ID del producto a modificar: ");
+        int id = sc.nextInt();
+        sc.nextLine();
+        System.out.print("Nuevo Nombre: ");
+        String nombre = sc.nextLine();
+        System.out.print("Nuevo Precio: ");
+        double precio = sc.nextDouble();
+        System.out.print("Nueva Cantidad: ");
+        int cantidad = sc.nextInt();
+        
+        Producto pMod = new Producto(id, nombre, precio, cantidad);
+        boolean actualizado = productoDAO.actualizar(pMod);
+        System.out.println(actualizado ? "¡Producto actualizado con éxito!" : "Error: Producto no encontrado.");
+    }
+
+    /**
+     * Funcionalidad 3: Consultar precios
+     * Muestra la lista detallada de precios y productos del menú.
+     */
+    public void consultarPrecios() {
+        System.out.println(" FUNCIONALIDAD 3:");
+        if(productoDAO.obtenerTodos().isEmpty()) {
+            System.out.println("No hay productos registrados.");
         } else {
-            System.out.println("No se encontró un producto con el ID ingresado.");
+            for (Producto p : productoDAO.obtenerTodos()) {
+                System.out.println(" - " + p.getNombre() + " | Precio: $" + p.getPrecio());
+            }
         }
-        return exito;
     }
 
-        /**
-  * método que realiza la función 3 consultar precios y productos
-  * mediante lista se logra visualizar de forma clara los productos ingresados
-  */
-    public List<Producto> consultarPreciosYProductos() {
-        return productoDAO.obtenerTodos();
-    }
-
-        /**
-  * método que realiza la función 4 controla las cantidades 
-  * registra según las que se kngresaron
-  * param id Id producto
-  * param int muevaCantidad
-  */
-    public boolean controlarCantidades(int idProducto, int nuevaCantidad) {
-        Producto p = productoDAO.obtenerPorId(idProducto);
+    /**
+     * Funcionalidad 4: Controlar cantidades 
+     * Ajusta la cantidad disponible de un producto específico.
+     */
+    public void controlarCantidades() {
+        System.out.println("FUNCIONALIDAD 4: CONTROLAR CANTIDADES ");
+        System.out.print("Ingrese ID del producto: ");
+        int id = sc.nextInt();
+        Producto p = productoDAO.obtenerPorId(id);
+        
         if (p != null) {
-            p.setCantidad(nuevaCantidad);
+            System.out.print("Stock actual (" + p.getCantidad() + "). Ingrese la nueva cantidad: ");
+            int nuevaCant = sc.nextInt();
+            p.setCantidad(nuevaCant);
             productoDAO.actualizar(p);
-            System.out.println("Stock actualizado a " + nuevaCantidad + " unidades.");
-            return true;
+            System.out.println("Stock actualizado correctamente");
+        } else {
+            System.out.println("Error: Producto no encontrado.");
         }
-        System.out.println("Producto no encontrado para ajustar stock.");
-        return true;
     }
-      /**
-  * método que realiza la función 5 procesar pago
-  * param id Id pedido
-  * param monto monto total
-  * param metodo pago 
-  * param nombre
-  */
-          
-    public boolean procesarPago(int idPedido, double monto, FormaPago metodoPago, String nombreMetodo) {
-        if (monto <= 0) {
-            System.out.println("El monto debe ser mayor a cero.");
-            return false;
-        }
 
-        boolean resultado = metodoPago.procesarPago(monto);
-        if (resultado) {
-            pagoDAO.registrarPagoHistorico(idPedido, monto, nombreMetodo);
-            System.out.println("se registro el pago correctamente");
+    /**
+     * Funcionalidad 5: Procesar pago
+     * Permite elegir la forma de pago (Efectivo, Tarjeta o Transferencia) y registrar la transacción.
+     */
+    public void procesarPago() {
+        System.out.println("FUNCIONALIDAD 5: PROCESAR PAGO");
+        System.out.print("Ingrese ID del Pedido: ");
+        int idPedido = sc.nextInt();
+        System.out.print("Ingrese Monto a pagar: ");
+        double monto = sc.nextDouble();
+        
+        System.out.println("Seleccione el método de pago:");
+        System.out.println("1. Efectivo / 2. Tarjeta / 3. Transferencia");
+        System.out.print("Opción: ");
+        int tipo = sc.nextInt();
+        
+        FormaPago formaPago = null;
+        String nombreMetodo = "";
+        
+        switch(tipo) {
+            case 1:
+                formaPago = new PagoEfectivo();
+                nombreMetodo = "Efectivo";
+                break;
+            case 2:
+                System.out.print("Ingrese número de tarjeta: ");
+                long numTarjeta = sc.nextLong();
+                formaPago = new PagoTarjeta(numTarjeta);
+                nombreMetodo = "Tarjeta";
+                break;
+            case 3:
+                sc.nextLine(); 
+                System.out.print("Ingrese número de cuenta / celular: ");
+                String numCuenta = sc.nextLine();
+                formaPago = new PagoTransferencia(numCuenta);
+                nombreMetodo = "Transferencia";
+                break;
+            default:
+                System.out.println("Método de pago inválido.");
+                return;
         }
-        return resultado;
+        
+        if (formaPago != null) {
+            boolean exito = formaPago.procesarPago(monto);
+            if (exito) {
+                pagoDAO.registrarPagoHistorico(idPedido, monto, nombreMetodo);
+                System.out.println("¡Pago procesado y registrado con éxito en el sistema!");
+            }
+        }
     }
+
+    /**
+     * Menú principal del Manager de Michel
+     * Muestra las 5 funcionalidades en bucle hasta que el usuario decida salir.
+     */
     public void mostrarMenuPrincipal() {
-    
-}
-
+        int op;
+        do {
+           
+            System.out.println("    MÓDULO MICHEL  FUNCIONALIDADES     ");
+          System.out.println("1. CRUD Productos");
+            System.out.println("2. Modificar Producto");
+            System.out.println("3. Consultar Precios");
+            System.out.println("4. Controlar Cantidades (Stock)");
+            System.out.println("5. Procesar Pago");
+            System.out.println("0. Volver al Menú Principal del Sistema");
+            System.out.print("Seleccione una opción: ");
+            op = sc.nextInt();
+            
+            switch(op) {
+                case 1: 
+                    crudProducto();
+                    break;
+                case 2:
+                    modificarProducto();
+                    break;
+                case 3: 
+                    consultarPrecios(); 
+                    break;
+                case 4: 
+                    controlarCantidades(); 
+                    break;
+                case 5: 
+                    procesarPago();
+                    break;
+                case 0: 
+                    System.out.println("Regresando...");
+                    break;
+                default: 
+                    System.out.println("Opción inválida.");
+                    break;
+            }
+        } while(op != 0);
+    }
 }
