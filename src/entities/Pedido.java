@@ -1,5 +1,6 @@
 package src.entities;
-
+import java.util.List;
+import java.util.ArrayList;
 /**
  * Esta clase representa un pedido realizado por un cliente.
  * Contiene el número de mesa, el estado del pedido y el monto total.
@@ -11,6 +12,7 @@ public class Pedido {
     private int mesa;
     private String estado;
     private double monto;
+    private static final List<Pedido> reporte = new ArrayList<>();
 
     /**
      * Crea un pedido vacío con estado inicial "Pendiente"
@@ -64,6 +66,9 @@ public class Pedido {
      */
     public void setEstado(String estado) {
         this.estado = estado;
+        if (estado.equals("Entregado")) {
+            reporte.add(this);
+        }
     }
 
     /**
@@ -97,4 +102,9 @@ public class Pedido {
     public String toString() {
         return "Pedido{id=" + id + ", mesa=" + mesa + ", estado=" + estado + ", monto=" + monto + "}";
     }
+
+    public static List<Pedido> getReporte() {
+        return reporte;
+    }
+    
 }
