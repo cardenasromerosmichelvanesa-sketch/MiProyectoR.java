@@ -1,30 +1,33 @@
 package src.entities;
-import java.util.List;
+
 public class Menu {
-
-    private String idProd;
-    private List<Producto> listaProductos;
-
-    public Menu(String idProd, List<Producto> listaProductos) {
-        this.idProd = idProd;
-        this.listaProductos = listaProductos;
-    }
     
-    public String getIdProd() {
+    private int idProd;
+    private double precioProd;
+
+    public Menu(int idProd, double precioProd) {
+        this.idProd = idProd;
+        this.precioProd = precioProd;
+    }
+
+    public int getIdProd() {
         return idProd;
     }
 
-    public void setIdProd(String idProd) {
+    public void setIdProd(int idProd) {
         this.idProd = idProd;
     }
 
-    public void registrarProducto(Producto producto) {
-        this.listaProductos.add(producto);
+    public double getPrecioProd() {
+        return precioProd;
     }
 
-    public void consultarPrecios() {
-        for (Producto p : listaProductos) {
-            System.out.println("Producto: " + p.getNombre() + " - Precio: $" + p.getPrecio());
-        }
+    public void setPrecioProd(double precioProd) {
+        this.precioProd = precioProd;
+    }
+
+    @Override
+    public String toString() {
+        return "Menu [ID Producto=" + idProd + ", Precio=" + precioProd + "]";
     }
 }
