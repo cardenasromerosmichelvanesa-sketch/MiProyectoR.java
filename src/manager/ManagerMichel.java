@@ -112,5 +112,8 @@ public class ManagerMichel {
         }
         return resultado;
     }
+    public void mostrarMenuPrincipal() {
+    
+}
 
-  
+}

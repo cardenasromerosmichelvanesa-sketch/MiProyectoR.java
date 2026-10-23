@@ -1,9 +1,9 @@
 package src.manager;
 
-import DAOs.DetallePedidoDAO;
-import DAOs.MesaDAO;
-import DAOs.MeseroDAO;
-import DAOs.PedidoDAO;
+import src.DAOs.DetallePedidoDAO;
+import src.DAOs.MesaDAO;
+import src.DAOs.MeseroDAO;
+import src.DAOs.PedidoDAO;
 import src.entities.DetallePedido;
 import src.entities.Mesa;
 import src.entities.Mesero;
@@ -11,7 +11,7 @@ import src.entities.Pedido;
 
 import java.util.Scanner;
 
-public class MiManagerMesero { 
+public class ManagerFelipe { 
     /**
      * DAOs que simulan la base de datos en memoria
      */
@@ -39,8 +39,13 @@ public class MiManagerMesero {
                  */
                 System.out.print("Num mesa: ");
                 int num = sc.nextInt();
-                mesaDAO.registrarMesa(new Mesa(num));
-                System.out.println("Mesa " + num + " registrada");
+                System.out.print("Capacidad (cuántas personas caben): ");
+                int capacidad = sc.nextInt();
+        try {
+               mesaDAO.registrarMesa(new Mesa(num, capacidad));
+} catch (IllegalArgumentException e) {
+    System.out.println("Error: " + e.getMessage());
+}
                 break;
             case 2:
                 /**
@@ -78,13 +83,15 @@ public class MiManagerMesero {
         System.out.print("Opcion: ");
         int op = sc.nextInt();
         switch(op) {
-            case 1:
-                /**
-                 * Crea un mesero con disponibilidad true
-                 */
-                meseroDAO.registrarMesero(new Mesero(true));
-                System.out.println("Mesero registrado");
-                break;
+            case 1:           
+               System.out.print("ID: ");
+               int idMesero = sc.nextInt();
+               sc.nextLine();
+               System.out.print("Nombre: ");
+               String nombreM = sc.nextLine();
+               System.out.print("Apellido: ");
+               String apellidoM = sc.nextLine();
+               meseroDAO.registrarMesero(new Mesero(idMesero, nombreM, apellidoM, true));
             case 2:
                 /**
                  * Filtra solo los que tienen meseroDisponible == true
@@ -120,8 +127,7 @@ public class MiManagerMesero {
                 System.out.print("Num mesa para pedido: ");
                 Mesa mesa = mesaDAO.buscarMesa(sc.nextInt());
                 if(mesa == null){ System.out.println("Mesa no existe"); return; }
-                // ARREGLO AQUÍ: Tu Pedido necesita 3 parámetros (mesa, estado, monto)
-                Pedido p = new Pedido(mesa, "Pendiente", 0.0);
+              Pedido p = new Pedido("ped" + System.currentTimeMillis(), mesa.getNumMesa(), "Pendiente", 0.0);
                 pedidoDAO.registrarPedido(p);
                 System.out.println("Pedido creado en mesa " + mesa.getNumMesa());
                 break;

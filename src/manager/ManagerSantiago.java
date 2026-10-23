@@ -53,5 +53,8 @@ public class ManagerSantiago {
 
 
     }
+    public void mostrarMenuPrincipal() {
+    
+}
 
 }
