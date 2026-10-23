@@ -120,10 +120,13 @@ public class Mesa {
      * Libera la mesa, la deja disponible y sin mesero
      */
     public void liberarMesa() {
-        this.disponible = true;
-        this.mesero = null;
-        System.out.println("Mesa " + numMesa + " liberada");
+    if (mesero != null) {
+        mesero.setMeseroDisponible(true);
     }
+    this.disponible = true;
+    this.mesero = null;
+    System.out.println("Mesa " + numMesa + " liberada");
+}
 
     @Override
     public String toString() {

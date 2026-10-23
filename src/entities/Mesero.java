@@ -86,12 +86,15 @@ public class Mesero extends Usuario{
     public void asignarMesa(Mesa mesa) {
         if (mesa == null) {
             System.out.println("Mesa inválida");
+        }  else if (!meseroDisponible) {
+        System.out.println("El mesero no está disponible");
         } else if (mesa.isDisponible()) {
             mesa.setMesero(this);
             System.out.println("Mesa " + mesa.getNumMesa() + " asignada al mesero");
         } else {
             System.out.println("La mesa no está disponible");
         }
+        
     }
 
     /**

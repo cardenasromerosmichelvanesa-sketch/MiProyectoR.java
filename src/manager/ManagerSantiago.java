@@ -42,6 +42,9 @@ public class ManagerSantiago {
         }
 
     }
+    public void mostrarMenuPrincipal() {
+    
+}
 
     private void menuUsuarios(AdministradorDAO adminDAO, Scanner tcl) {
         int opc=-1, idUsuario;

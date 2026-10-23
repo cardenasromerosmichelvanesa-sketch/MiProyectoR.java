@@ -74,13 +74,12 @@ public class MesaDAO {
      * @param mesero mesero a asignar
      */
     public void asignarMesero(int numMesa, Mesero mesero) {
-        Mesa mesa = buscarMesa(numMesa);
-        if (mesa != null) {
-            mesa.setMesero(mesero);
-            System.out.println("Mesero asignado a mesa " + numMesa);
-        } else {
-            System.out.println("No existe la mesa " + numMesa);
-        }
+    Mesa mesa = buscarMesa(numMesa);
+    if (mesa != null && mesero != null) {
+        mesero.asignarMesa(mesa);
+    } else {
+        System.out.println("Mesa o mesero no existe");
+    }
     }
 
     /**
