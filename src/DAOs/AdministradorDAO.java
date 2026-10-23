@@ -1,19 +1,16 @@
 package src.DAOs;
-import java.util.List;
-
 import src.entities.*;
+import java.util.List;
+import java.util.ArrayList;
 public class AdministradorDAO {
     
-    /**
-     * Metodo para ver la lista usada para el reporte
-     * @param reporte Lista usada para el reporte
-     */
-    public void verReporteVentas(List<Pedido> reporte) {
-        System.out.println("|\t Id\t|\t Monto\t|");
-        for (Pedido aux: reporte) {
-            System.out.println("| "+aux.getId()+"\t|\t"+aux.getMonto()+"\t|");
-        }
+    public AdministradorDAO() {
     }
+
+    public void listaPedidos(PedidoDAO pedidoDAO) {
+        System.out.println(pedidoDAO.listaPedidos());
+    }
+
 
     /**
      * Metodo que cambia el mesero asignado a una mesa
@@ -44,66 +41,88 @@ public class AdministradorDAO {
             System.out.println("Mesa no disponible");
         }
     }
-
+    /**
+     * Metodo para ver el listado de empleados
+     */
+    public void verEmpleados() {
+        System.out.println(Usuario.empleados);
+    }
     /**
      * Metodo para añadir un empleado a la lista de empleados
-     * @param empleados Lista usada para almacenar a los empleados
-     * @param usuario Empleado que se agrega a la lista
-     * @return La lista usada mas el empleado nuevo
+     * @param usuario Usuario que se agrega a la lista
      */
-    public List<Usuario> añadirEmpleado(List<Usuario> empleados, Usuario usuario){
-        empleados.add(usuario);
-        return empleados;
+    public void añadirEmpleado(Usuario usuario) {
+        Usuario.empleados.add(usuario);
     }
     /**
      * Metodo para eliminar un empleado a la lista de empleados
-     * @param empleados Lista usada para almacenar a los empleados
-     * @param usuario Empleado que se elimina de la lista
-     * @return La lista usada menos el empleado eliminado
+     * @param usuario Usuario que se elimina de la lista
      */
-    public List<Usuario> eliminarEmpleado(List<Usuario> empleados, Usuario usuario){
-        empleados.remove(usuario);
-        return empleados;
+    public void eliminarEmpleado(Usuario usuario) {
+        Usuario.empleados.remove(usuario);
     }
     /**
-     * Metodo para cambiar el id de un usuario
+     * Metodo para cambiar el id de un empleado
      * @param usuario Usuario al que se aplica el cambio
      * @param newId Nuevo id que reemplazara al antiguo
      */
-    public void setUsuarioId(Usuario usuario, int newId) {
+    public void setEmpleadoId(Usuario usuario, int newId) {
         usuario.setId(newId);
     }
     /**
-     * Metodo para cambiar el nombre de un usuario
+     * Metodo para cambiar el nombre de un empleado
      * @param usuario Usuario al que se aplica el cambio
      * @param newNombre Nuevo nombre que reemplazara al antiguo
      */
-    public void setUsuarioNombre(Usuario usuario, String newNombre) {
+    public void setEmpleadoNombre(Usuario usuario, String newNombre) {
         usuario.setNombre(newNombre);
     }
     /**
-     * Metodo que cambia el apellido de un usuario
+     * Metodo para cambiar el apellido de un empleado
      * @param usuario Usuario al que se aplica el cambio
      * @param newApellido Nuevo apellido que reemplazara al antiguo
      */
-    public void setUsuarioApellido(Usuario usuario, String newApellido) {
+    public void setEmpleadoApellido(Usuario usuario, String newApellido) {
         usuario.setApellido(newApellido);
     }
-
     /**
-     * Metodo que muestra el tiempo de preparacion del producto
-     * @param producto Producto del que se muestra el tiempo de preparación
+     * Metodo para obtener un empleado por su id
+     * @param id Id del empleado que se desea obtener
+     * @return Usuario con el id especificado, o null si no se encuentra
      */
-    public void verTiempoPreparacion(Producto producto) {
-        producto.getTiempopre();
+    public Usuario getEmpleadoPorId(int id) {
+        for (Usuario empleado : Usuario.empleados) {
+            if (empleado.getIdo() == id) {
+                return empleado;
+            }
+        }
+        return null; // Retorna null si no se encuentra el empleado
     }
     /**
-     * Metodo para cambiar el tiempo de preparacion de un producto
-     * @param producto Producto que sufrira el cambio en el tiemppo de preparación
-     * @param tiempo Nuevo tiempo de preparación
+     * Metodo para obtener un empleado por su nombre
+     * @param nombre Nombre del empleado que se desea obtener
+     * @return Usuario con el nombre especificado, o null si no se encuentra
      */
-    public void cambiarTiempoPreparacion(Producto producto, String tiempo){
-        producto.setTiempopre(tiempo);
+    public Usuario getEmpleadoPorNombre(String nombre) {
+        for (Usuario empleado : Usuario.empleados) {
+            if (empleado.getNombre().equals(nombre)) {
+                return empleado;
+            }
+        }
+        return null; // Retorna null si no se encuentra el empleado
+    }
+    /**
+     * Metodo para obtener un empleado por su apellido
+     * @param apellido Apellido del empleado que se desea obtener
+     * @return Usuario con el apellido especificado, o null si no se encuentra
+     */
+    public Usuario getEmpleadoPorApellido(String apellido) {
+        for (Usuario empleado : Usuario.empleados) {
+            if (empleado.getApellido().equals(apellido)) {
+                return empleado;
+            }
+        }
+        return null; // Retorna null si no se encuentra el empleado
     }
 
     /**
@@ -127,13 +146,7 @@ public class AdministradorDAO {
         return menu;
     }
 
-    /**
-     * Metodo para ver cuantos cocineros tiene disponibles la cocina
-     * @param cocina Cocina en uso
-     */
-    public void verCocinerosDisponibles(Cocina cocina){
-        cocina.getCocinerosDisponibles();
-    }
+    
     /**
      * Metodo para cambiar los cocineros disponible en cocina
      * @param cocina Cocina en uso
@@ -141,26 +154,6 @@ public class AdministradorDAO {
      */
     public void setCocinerosDisponibles(Cocina cocina, int disponibles){
         cocina.setCocinerosDisponibles(disponibles);
-    }
-    /**
-     * Metodo para ver cuantos cocineros tiene ocupados la cocina
-     * @param cocina Cocina en uso
-     */
-    public void verCocinerosOcupados(Cocina cocina){
-        cocina.getCocinerosOcupados();
-    }
-    /**
-     * Metodo para cambiar los cocineros ocupados en cocina
-     * @param cocina Cocina en uso
-     * @param ocupados Nuevo numero de cocineros ocupados
-     */
-    public void setCocinerosOcupados(Cocina cocina, int ocupados){
-        if (cocina.getCocinerosDisponibles()>ocupados && cocina.disponibilidad(cocina)) {
-            cocina.setCocinerosOcupados(ocupados);
-        }
-        else {
-            System.out.println("Error");
-        }
     }
 
 }

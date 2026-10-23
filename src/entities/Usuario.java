@@ -1,14 +1,19 @@
 package src.entities;
+import java.util.List;
+import java.util.ArrayList;
 public class Usuario {
 
     private int idUsuario;
     private String nombre;
     private String apellido;
+    public static final List<Usuario> empleados=new ArrayList<Usuario>();
+    
 
     public Usuario(int idUsuario, String nombre, String apellido) {
         this.idUsuario = idUsuario;
         this.nombre = nombre;
         this.apellido = apellido;
+        empleados.add(this);
     }
 
     public int getIdo() {

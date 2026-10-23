@@ -1,8 +1,8 @@
 package src.manager;
 
-import dao.ProductoDAO;
-import dao.PagoDAO;
-import model.*;
+import src.DAOs.ProductoDAO;
+import src.DAOs.PagoDAO;
+import src.entities.Producto;   
 
 import java.util.List;
 

@@ -1,10 +1,9 @@
-package dao;
+package src.DAOs;
 
-import model.Pagos;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PagosDAO {
+public class PagoDAO {
     private List<Pagos> listaPagos = new ArrayList<>();
 
    
