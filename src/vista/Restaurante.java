@@ -4,20 +4,12 @@
  */
 package src.vista;
 
-/**
- *
- * @author salaG201
- */
-public class Restaurante {
-
+public interface FormaPago {
     /**
-     * @param args the command line arguments
+     * Procesa la transacción según la estrategia de pago seleccionada.
+     * 
+     * @param monto Valor total a pagar
+     * @return true si el pago se completó con éxito, false en caso contrario
      */
-   public interface FormaPago {
-    void pagoEfectivo(double monto);
-    void pagoTarjeta(String numTarjeta, double monto);
-    void pagoTransferencia(String numCuenta, double monto);
-}
-
-    
+    boolean procesarPago(double monto);
 }
