@@ -1,5 +1,6 @@
 package src.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,6 +11,8 @@ import java.util.List;
 public class Mesero extends Usuario{
   
     private boolean meseroDisponible;
+    /** Mesas que atiende este mesero */
+    private List<Mesa> mesasAsignadas = new ArrayList<>();
 
     /**
      * Constructor del mesero
@@ -80,21 +83,44 @@ public class Mesero extends Usuario{
     }
 
     /**
-     * Asigna una mesa al mesero si está disponible
+     * Asigna una mesa al mesero solo si la mesa está disponible.
+     * La mesa queda ocupada (deja de aparecer como disponible).
      * @param mesa mesa a asignar
+     * @return true si se asignó
      */
-    public void asignarMesa(Mesa mesa) {
+    public boolean asignarMesa(Mesa mesa) {
         if (mesa == null) {
             System.out.println("Mesa inválida");
-        }  else if (!meseroDisponible) {
-        System.out.println("El mesero no está disponible");
-        } else if (mesa.isDisponible()) {
-            mesa.setMesero(this);
-            System.out.println("Mesa " + mesa.getNumMesa() + " asignada al mesero");
-        } else {
-            System.out.println("La mesa no está disponible");
+            return false;
         }
-        
+        if (!meseroDisponible) {
+            System.out.println("El mesero no está disponible");
+            return false;
+        }
+        if (!mesa.isDisponible()) {
+            System.out.println("La mesa " + mesa.getNumMesa() + " no está disponible");
+            return false;
+        }
+        mesa.setMesero(this);          // la mesa queda ocupada
+        mesasAsignadas.add(mesa);
+        System.out.println("Mesa " + mesa.getNumMesa() + " asignada al mesero " + getNombre());
+        return true;
+    }
+
+    /**
+     * Quita una mesa de la lista del mesero (la usa Mesa.liberarMesa()).
+     * @param mesa mesa a quitar
+     */
+    public void quitarMesa(Mesa mesa) {
+        mesasAsignadas.remove(mesa);
+    }
+
+    /**
+     * Mesas que atiende actualmente este mesero
+     * @return copia de la lista de mesas asignadas
+     */
+    public List<Mesa> getMesasAsignadas() {
+        return new ArrayList<>(mesasAsignadas);
     }
 
     /**

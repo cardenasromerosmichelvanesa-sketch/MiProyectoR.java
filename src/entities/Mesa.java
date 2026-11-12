@@ -107,6 +107,7 @@ public class Mesa {
 
     /**
      * Asigna un mesero a la mesa. Si se asigna uno, la mesa queda ocupada.
+     * Si se pasa null, se quita el mesero (usar liberarMesa() para dejarla disponible).
      * @param mesero mesero que atenderá la mesa (null para quitarlo)
      */
     public void setMesero(Mesero mesero) {
@@ -117,20 +118,21 @@ public class Mesa {
     }
 
     /**
-     * Libera la mesa, la deja disponible y sin mesero
+     * Libera la mesa: queda disponible, sin mesero, y se quita de la lista del mesero.
      */
     public void liberarMesa() {
-    if (mesero != null) {
-        mesero.setMeseroDisponible(true);
+        if (mesero != null) {
+            mesero.quitarMesa(this);
+        }
+        this.disponible = true;
+        this.mesero = null;
+        System.out.println("Mesa " + numMesa + " liberada");
     }
-    this.disponible = true;
-    this.mesero = null;
-    System.out.println("Mesa " + numMesa + " liberada");
-}
 
     @Override
     public String toString() {
         return "Mesa " + numMesa + " (capacidad: " + capacidad + ", "
-                + (disponible ? "disponible" : "ocupada") + ")";
+                + (disponible ? "disponible" : "ocupada"
+                + (mesero != null ? ", mesero: " + mesero.getNombre() : "")) + ")";
     }
 }

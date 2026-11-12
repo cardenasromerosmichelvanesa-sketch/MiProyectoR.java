@@ -29,7 +29,7 @@ public class ManagerFelipe {
      */
     public void crudMesa() {
         System.out.println("FUNCIONALIDAD 1: CRUD MESA ");
-        System.out.println("1.Registrar | 2.Lista | 3.Buscar | 4.Liberar");
+        System.out.println("1.Registrar | 2.Lista (todas) | 3.Buscar | 4.Liberar | 5.Mesas disponibles");
         System.out.print("Opcion: ");
         int op = sc.nextInt();
         switch(op) {
@@ -52,6 +52,9 @@ public class ManagerFelipe {
                  * muestra disponibilidad
                  */
                 System.out.println("Total mesas: " + mesaDAO.ListaMesas().size());
+                for (Mesa mm : mesaDAO.ListaMesas()) {
+                    System.out.println("  " + mm);
+                }
                 break;
             case 3:
                 /**
@@ -70,7 +73,27 @@ public class ManagerFelipe {
                 if(ml != null) ml.liberarMesa();
                 else System.out.println("No existe");
                 break;
+            case 5:
+                mostrarMesasDisponibles();
+                break;
         }
+    }
+
+    /**
+     * Muestra solo las mesas disponibles (las asignadas a un mesero no aparecen)
+     * @return true si hay al menos una mesa disponible
+     */
+    private boolean mostrarMesasDisponibles() {
+        java.util.List<Mesa> libres = mesaDAO.MesasDisponibles();
+        if (libres.isEmpty()) {
+            System.out.println("No hay mesas disponibles");
+            return false;
+        }
+        System.out.println("Mesas disponibles:");
+        for (Mesa mm : libres) {
+            System.out.println("  " + mm);
+        }
+        return true;
     }
 
     public void crudMesero() {
@@ -92,6 +115,7 @@ public class ManagerFelipe {
                System.out.print("Apellido: ");
                String apellidoM = sc.nextLine();
                meseroDAO.registrarMesero(new Mesero(idMesero, nombreM, apellidoM, true));
+               break;
             case 2:
                 /**
                  * Filtra solo los que tienen meseroDisponible == true
@@ -100,12 +124,34 @@ public class ManagerFelipe {
                 break;
             case 3:
                 /**
-                 * Busca una mesa y se la asigna al primer mesero libre
+                 * Muestra las mesas disponibles, deja elegir mesa y mesero,
+                 * y al asignarla la mesa deja de estar disponible.
                  */
-                System.out.print("Num mesa: ");
+                if (meseroDAO.listaMeseros().isEmpty()) {
+                    System.out.println("Primero registra un mesero");
+                    break;
+                }
+                if (!mostrarMesasDisponibles()) {
+                    break;
+                }
+                System.out.print("Num mesa a asignar: ");
                 Mesa mesa = mesaDAO.buscarMesa(sc.nextInt());
-                if(mesa != null) meseroDAO.asignarMesa(mesa);
-                else System.out.println("Mesa no existe");
+                if (mesa == null) {
+                    System.out.println("Mesa no existe");
+                    break;
+                }
+                System.out.println("Meseros disponibles:");
+                for (Mesero me : meseroDAO.listaDisponibles()) {
+                    System.out.println("  ID " + me.getIdo() + " - " + me.getNombre()
+                            + " (mesas: " + me.getMesasAsignadas().size() + ")");
+                }
+                System.out.print("ID del mesero: ");
+                Mesero elegido = meseroDAO.buscarMesero(sc.nextInt());
+                if (elegido == null) {
+                    System.out.println("Mesero no existe");
+                    break;
+                }
+                meseroDAO.asignarMesa(elegido, mesa);
                 break;
         }
     }

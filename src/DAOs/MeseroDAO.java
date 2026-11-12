@@ -53,7 +53,35 @@ public class MeseroDAO {
     }
 
     /**
-     * Busca y asigna una mesa a un mesero disponible
+     * Busca un mesero por su id
+     * @param id id del mesero
+     * @return el mesero o null
+     */
+    public Mesero buscarMesero(int id) {
+        for (Mesero m : listaMeseros) {
+            if (m.getIdo() == id) {
+                return m;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Asigna una mesa a un mesero concreto (la mesa debe estar disponible)
+     * @param mesero mesero que atenderá la mesa
+     * @param mesa mesa a asignar
+     * @return true si se asignó
+     */
+    public boolean asignarMesa(Mesero mesero, Mesa mesa) {
+        if (mesero == null || mesa == null) {
+            System.out.println("Mesero o mesa inválidos");
+            return false;
+        }
+        return mesero.asignarMesa(mesa);
+    }
+
+    /**
+     * Busca el primer mesero disponible y le asigna la mesa
      * @param mesa mesa a asignar
      */
     public void asignarMesa(Mesa mesa) {

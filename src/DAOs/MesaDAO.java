@@ -6,6 +6,7 @@ import java.util.Scanner;
 import src.entities.Mesa;
 import src.entities.Mesero;
 
+
 /**
  * Se encarga de guardar, buscar y liberar mesas en la base de datos.
  */
@@ -74,12 +75,12 @@ public class MesaDAO {
      * @param mesero mesero a asignar
      */
     public void asignarMesero(int numMesa, Mesero mesero) {
-    Mesa mesa = buscarMesa(numMesa);
-    if (mesa != null && mesero != null) {
-        mesero.asignarMesa(mesa);
-    } else {
-        System.out.println("Mesa o mesero no existe");
-    }
+        Mesa mesa = buscarMesa(numMesa);
+        if (mesa != null && mesero != null) {
+            mesero.asignarMesa(mesa);
+        } else {
+            System.out.println("Mesa o mesero no existe");
+        }
     }
 
     /**
