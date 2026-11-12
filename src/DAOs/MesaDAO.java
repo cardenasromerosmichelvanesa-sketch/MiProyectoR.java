@@ -6,7 +6,6 @@ import java.util.Scanner;
 import src.entities.Mesa;
 import src.entities.Mesero;
 
-
 /**
  * Se encarga de guardar, buscar y liberar mesas en la base de datos.
  */

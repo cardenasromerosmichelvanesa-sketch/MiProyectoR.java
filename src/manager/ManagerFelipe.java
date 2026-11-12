@@ -1,9 +1,11 @@
 package src.manager;
 
+import src.DAOs.ClienteDAO;
 import src.DAOs.DetallePedidoDAO;
 import src.DAOs.MesaDAO;
 import src.DAOs.MeseroDAO;
 import src.DAOs.PedidoDAO;
+import src.entities.Cliente;
 import src.entities.DetallePedido;
 import src.entities.Mesa;
 import src.entities.Mesero;
@@ -19,6 +21,7 @@ public class ManagerFelipe {
     private PedidoDAO pedidoDAO = new PedidoDAO();
     private DetallePedidoDAO detalleDAO = new DetallePedidoDAO();
     private MesaDAO mesaDAO = new MesaDAO();
+    private ClienteDAO clienteDAO = new ClienteDAO();
     /**
      *  Scanner para leer lo que escribe el usuario
      */
@@ -102,7 +105,7 @@ public class ManagerFelipe {
          * Registra meseros y asigna mesas
          */
         System.out.println(" FUNCIONALIDAD 2: CRUD MESERO ");
-        System.out.println("1.Registrar | 2.Lista Disponibles | 3.Asignar Mesa");
+        System.out.println("1.Registrar | 2.Lista Disponibles | 3.Asignar Mesa | 4.Pedidos del mesero");
         System.out.print("Opcion: ");
         int op = sc.nextInt();
         switch(op) {
@@ -153,7 +156,111 @@ public class ManagerFelipe {
                 }
                 meseroDAO.asignarMesa(elegido, mesa);
                 break;
+            case 4:
+                /**
+                 * Pide el ID del mesero y abre su menú de pedidos
+                 */
+                if (meseroDAO.listaMeseros().isEmpty()) {
+                    System.out.println("Primero registra un mesero");
+                    break;
+                }
+                System.out.println("Meseros:");
+                for (Mesero me : meseroDAO.listaMeseros()) {
+                    System.out.println("  ID " + me.getIdo() + " - " + me.getNombre());
+                }
+                System.out.print("ID del mesero: ");
+                Mesero atiende = meseroDAO.buscarMesero(sc.nextInt());
+                if (atiende == null) {
+                    System.out.println("Mesero no existe");
+                    break;
+                }
+                menuPedidosMesero(atiende);
+                break;
         }
+    }
+
+    /**
+     * Menú de pedidos de un mesero: crear pedido (mesa, cliente y detalle) o ver sus pedidos
+     * @param mesero mesero que atiende
+     */
+    private void menuPedidosMesero(Mesero mesero) {
+        System.out.println("PEDIDOS DE " + mesero.getNombre());
+        System.out.println("1.Crear pedido | 2.Ver mis pedidos");
+        System.out.print("Opcion: ");
+        int op = sc.nextInt();
+        switch (op) {
+            case 1:
+                crearPedidoDeMesero(mesero);
+                break;
+            case 2:
+                java.util.List<Pedido> mios = pedidoDAO.buscarPorMesero(mesero);
+                if (mios.isEmpty()) {
+                    System.out.println("Este mesero no tiene pedidos");
+                }
+                for (Pedido pe : mios) {
+                    System.out.println("  " + pe);
+                    for (DetallePedido d : pe.getDetalles()) {
+                        System.out.println("     - " + d);
+                    }
+                }
+                break;
+        }
+    }
+
+    /**
+     * Crea un pedido: mesero (ya elegido), número de mesa, cliente y luego el detalle
+     * (producto y cantidad, tantas veces como se quiera).
+     * @param mesero mesero que hace el pedido
+     */
+    private void crearPedidoDeMesero(Mesero mesero) {
+        java.util.List<Mesa> suyas = mesero.getMesasAsignadas();
+        if (suyas.isEmpty()) {
+            System.out.println("Este mesero no tiene mesas asignadas. Asígnale una primero.");
+            return;
+        }
+        System.out.println("Mesas del mesero:");
+        for (Mesa mm : suyas) {
+            System.out.println("  " + mm);
+        }
+        System.out.print("Num mesa: ");
+        Mesa mesa = mesaDAO.buscarMesa(sc.nextInt());
+        sc.nextLine();
+        if (mesa == null) {
+            System.out.println("Mesa no existe");
+            return;
+        }
+        System.out.print("Cliente (contacto): ");
+        String contacto = sc.nextLine();
+        System.out.print("Cliente (ubicación): ");
+        String ubicacion = sc.nextLine();
+        Cliente cliente = new Cliente(contacto, ubicacion);
+
+        Pedido pedido = mesero.crearPedido(mesa, cliente);
+        if (pedido == null) {
+            return;
+        }
+        clienteDAO.registra(cliente);
+        pedidoDAO.registrarPedido(pedido);
+
+        // Detalle del pedido: producto y cantidad
+        String mas;
+        do {
+            System.out.print("ID Producto: ");
+            int idProducto = sc.nextInt();
+            System.out.print("Cantidad: ");
+            int cantidad = sc.nextInt();
+            sc.nextLine();
+            try {
+                DetallePedido detalle = new DetallePedido(idProducto, cantidad);
+                pedido.agregarDetalle(detalle);
+                detalleDAO.registrar(detalle);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Error: " + e.getMessage());
+            }
+            System.out.print("¿Agregar otro producto? (s/n): ");
+            mas = sc.nextLine().trim();
+        } while (mas.equalsIgnoreCase("s"));
+        System.out.println("Pedido guardado: " + pedido);
     }
 
     public void crudPedido() {

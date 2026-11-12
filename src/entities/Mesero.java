@@ -60,6 +60,32 @@ public class Mesero extends Usuario{
     }
     
     /**
+     * Crea un pedido para una mesa que atiende este mesero, ligado a un cliente.
+     * @param mesa mesa del pedido (debe estar asignada a este mesero)
+     * @param cliente cliente que hace el pedido
+     * @return el pedido creado o null si no se pudo
+     */
+    public Pedido crearPedido(Mesa mesa, Cliente cliente) {
+        if (!meseroDisponible) {
+            System.out.println("El mesero no está disponible");
+            return null;
+        }
+        if (mesa == null || cliente == null) {
+            System.out.println("Se necesita una mesa y un cliente para crear el pedido");
+            return null;
+        }
+        if (mesa.getMesero() != this) {
+            System.out.println("La mesa " + mesa.getNumMesa() + " no está asignada a este mesero");
+            return null;
+        }
+        Pedido pedido = new Pedido("ped" + System.currentTimeMillis(), mesa.getNumMesa(), "Pendiente", 0.0);
+        pedido.setMesero(this);
+        pedido.setCliente(cliente);
+        System.out.println("Pedido creado correctamente");
+        return pedido;
+    }
+
+    /**
      * Agrega productos a un pedido existente
      * @param pedido pedido al que se agrega
      * @param idProducto id del producto

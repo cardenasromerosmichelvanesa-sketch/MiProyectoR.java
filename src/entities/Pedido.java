@@ -1,5 +1,8 @@
 package src.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Esta clase representa un pedido realizado por un cliente.
  * Contiene el número de mesa, el estado del pedido y el monto total.
@@ -11,6 +14,9 @@ public class Pedido {
     private int mesa;
     private String estado;
     private double monto;
+    private Mesero mesero;
+    private Cliente cliente;
+    private List<DetallePedido> detalles = new ArrayList<>();
 
     /**
      * Crea un pedido vacío con estado inicial "Pendiente"
@@ -93,8 +99,44 @@ public class Pedido {
         this.id = id;
     }
 
+    public Mesero getMesero() {
+        return mesero;
+    }
+
+    public void setMesero(Mesero mesero) {
+        this.mesero = mesero;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    /**
+     * Agrega un detalle (producto y cantidad) al pedido
+     * @param detalle detalle a agregar
+     */
+    public void agregarDetalle(DetallePedido detalle) {
+        if (detalle != null) {
+            detalles.add(detalle);
+        }
+    }
+
+    /**
+     * @return copia de la lista de detalles del pedido
+     */
+    public List<DetallePedido> getDetalles() {
+        return new ArrayList<>(detalles);
+    }
+
     @Override
     public String toString() {
-        return "Pedido{id=" + id + ", mesa=" + mesa + ", estado=" + estado + ", monto=" + monto + "}";
+        return "Pedido{id=" + id + ", mesa=" + mesa + ", estado=" + estado + ", monto=" + monto
+                + (mesero != null ? ", mesero=" + mesero.getNombre() : "")
+                + (cliente != null ? ", cliente=" + cliente.getTipoContacto() : "")
+                + ", productos=" + detalles.size() + "}";
     }
 }

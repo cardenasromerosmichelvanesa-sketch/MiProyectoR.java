@@ -1,7 +1,6 @@
 package src.DAOs;
 import java.util.ArrayList;
 import java.util.List;
-
 import src.entities.Pedido;
 
 /**
@@ -33,6 +32,21 @@ public class PedidoDAO {
      */
     public List<Pedido> listaPedidos() {
         return listaPedidos;
+    }
+
+    /**
+     * Pedidos hechos por un mesero
+     * @param mesero mesero a buscar
+     * @return lista de pedidos de ese mesero
+     */
+    public List<Pedido> buscarPorMesero(src.entities.Mesero mesero) {
+        List<Pedido> resultado = new ArrayList<>();
+        for (Pedido p : listaPedidos) {
+            if (p.getMesero() == mesero) {
+                resultado.add(p);
+            }
+        }
+        return resultado;
     }
 
     /**
