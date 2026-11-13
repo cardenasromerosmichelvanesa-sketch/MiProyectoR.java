@@ -4,6 +4,7 @@
  */
 package src.vista;
 
+
 public interface FormaPago {
     /**
      * Procesa la transacción según la estrategia de pago seleccionada.

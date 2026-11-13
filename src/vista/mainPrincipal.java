@@ -1,18 +1,30 @@
 package src.vista;
 
 import src.manager.ManagerSantiago;
-import src.manager.MiManagerMesero;
-import src.manager.ManagerMichel;
+import src.manager.ManagerFelipe;
+
 import java.util.Scanner;
 
 public class mainPrincipal {
 
     public static void main(String[] args) {
         // Instancia de los 3 Managers individuales
+          Scanner sc = new Scanner(System.in);
         ManagerSantiago managerSantiago = new ManagerSantiago();
-        MiManagerMesero managerFelipe = new MiManagerMesero();
-        ManagerMichel managerMichel = new ManagerMichel();
-
+        ManagerFelipe managerFelipe = new ManagerFelipe();
+       
+        System.out.println("Elige el manager que vas a usar ");
+        System.out.println("Opciones: 1.Manager de Felipe, 2.Manager de Michel,  3.Manager de Santiago");
+        int opciones = sc.nextInt();
+           switch(opciones) {
+            case 1:
+            managerFelipe.mostrarMenuPrincipal();
+            break;
+            case 2:
+            
+            managerSantiago.mostrarMenuPrincipal();
+            break;
+    } 
         Scanner scanner = new Scanner(System.in);
         int opcionMain = -1;
 
@@ -52,7 +64,7 @@ public class mainPrincipal {
     }
 
     // MENÚ Felipe
-    private static void menuFelipe(MiManagerMesero manager, Scanner scanner) {
+    private static void menuFelipe(ManagerFelipe manager, Scanner scanner) {
         System.out.println(" MESEROS, MESAS Y PEDIDOS ");
         System.out.println("1. Registrar Cliente");
         System.out.println("2. Asignar Mesa y Mesero");
@@ -65,15 +77,5 @@ public class mainPrincipal {
     }
 
     // MENÚ Michel
-    private static void menuMichel(ManagerMichel manager, Scanner scanner) {
-        System.out.println("MÓDULO MENÚ, PRODUCTOS Y PAGOS");
-        System.out.println("1. Registrar Producto");
-        System.out.println("2. Modificar Producto");
-        System.out.println("3. Consultar Precios");
-        System.out.println("4. Controlar Cantidades");
-        System.out.println("5. Procesar Pago");
-        System.out.print("Seleccione una opción ");
-        int op = scanner.nextInt();
-        
-    }
+    
 }
