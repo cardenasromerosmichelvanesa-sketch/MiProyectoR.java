@@ -1,7 +1,7 @@
 package src.vista;
 
 import src.manager.ManagerSantiago;
-import src.manager.MiManagerMesero;
+import src.manager.ManagerFelipe;
 import src.manager.ManagerMichel;
 
 import java.util.Scanner;
@@ -13,7 +13,7 @@ public class mainPrincipal {
         // Instancias de los tres Managers
         ManagerSantiago managerSantiago = new ManagerSantiago();
 
-        MiManagerMesero managerFelipe = new MiManagerMesero();
+        ManagerFelipe managerFelipe = new ManagerFelipe();
 
         Scanner scanner = new Scanner(System.in);
 
@@ -80,7 +80,7 @@ public class mainPrincipal {
 
     // MENÚ FELIPE
     private static void menuFelipe(
-            MiManagerMesero manager,
+            ManagerFelipe manager,
             Scanner scanner) {
 
         System.out.println(" MESEROS, MESAS Y PEDIDOS ");

@@ -142,7 +142,7 @@ public class ManagerFelipe {
                 }
                 System.out.println("Meseros disponibles:");
                 for (Mesero me : meseroDAO.listaDisponibles()) {
-                    System.out.println("  ID " + me.getIdo() + " - " + me.getNombre()
+                    System.out.println("  ID " + me.getId() + " - " + me.getNombre()
                             + " (mesas: " + me.getMesasAsignadas().size() + ")");
                 }
                 System.out.print("ID del mesero: ");
@@ -163,7 +163,7 @@ public class ManagerFelipe {
                 }
                 System.out.println("Meseros:");
                 for (Mesero me : meseroDAO.listaMeseros()) {
-                    System.out.println("  ID " + me.getIdo() + " - " + me.getNombre());
+                    System.out.println("  ID " + me.getId() + " - " + me.getNombre());
                 }
                 System.out.print("ID del mesero: ");
                 Mesero atiende = meseroDAO.buscarMesero(sc.nextInt());
