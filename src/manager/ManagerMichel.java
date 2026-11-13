@@ -4,6 +4,12 @@ import src.DAOs.ProductoDAO;
 import src.DAOs.PagoDAO;
 import src.entities.Producto;
 
+import src.vista.FormaPago;
+import src.vista.PagoEfectivo;
+import src.vista.PagoTarjeta;
+import src.vista.PagoTransferencia;
+
+
 import src.entities.Pagos;
 
 import java.util.List;
