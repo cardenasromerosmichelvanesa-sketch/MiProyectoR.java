@@ -10,15 +10,16 @@ public class ManagerSantiago {
         Scanner tcl=new Scanner(System.in);
         AdministradorDAO adminDAO=new AdministradorDAO();
         CocinaDAO cocinaDAO=new CocinaDAO();
-        Cocina cocina=new Cocina(0);
         int opc=-1;
 
-        Usuario usuario1 = new Usuario(1, "Juan", "Pérez");
-        Usuario usuario2 = new Usuario(2, "María", "Gómez");
+        Mesero mesero1 = new Mesero(1, "Juan", "Pérez", true);
+        Mesero mesero2 = new Mesero(2, "María", "Gómez", true);
+        Administrador admin1 = new Administrador(3, "Carlos", "López");
+        Administrador admin2 = new Administrador(4, "Ana", "Martínez");
         Pedido pedido1 = new Pedido("P001", 1001, "Pendiente", 123);
         Pedido pedido2 = new Pedido("P002", 1002, "Pendiente", 456);
-        cocinaDAO.cocinarPedido(pedido1, cocina);
-        cocinaDAO.cocinarPedido(pedido2, cocina);
+        CocinaDAO.recibirPedido(pedido1);
+        CocinaDAO.recibirPedido(pedido2);
 
         System.out.println("=======================================================");
         System.out.println(" Bienvenido al sistema de gestión de usuarios y cocina");
@@ -34,7 +35,7 @@ public class ManagerSantiago {
                     menuUsuarios(adminDAO, tcl);
                     break;
                 case 2:
-                    menuCocina(adminDAO,tcl,cocina);
+                    menuCocina(adminDAO,tcl);
                     break;
                 default:
                     System.out.println("Opción no válida.");
@@ -65,16 +66,25 @@ public class ManagerSantiago {
                     case 1:
                         System.out.println("Ingrese los datos del usuario a registrar:");
                         System.out.println("Ingrese el ID del usuario:");
-                        if (tcl.hasNextInt()) {
+                        if (tcl.hasNextInt() && tcl.nextInt() > 0) {
                             idUsuario = tcl.nextInt();
                             System.out.println("Ingrese el nombre del usuario:");
                             nombre = tcl.nextLine();
                             System.out.println("Ingrese el apellido del usuario:");
                             apellido = tcl.nextLine();
-                            adminDAO.añadirEmpleado(new Usuario(idUsuario, nombre, apellido));
+                            System.out.println("Ingrese el cargo del usuario:");
+                            String cargo = tcl.nextLine();
+                            if (cargo.equals("Administrador")){
+                                usuario = new Administrador(idUsuario, nombre, apellido);
+                            } else if (cargo.equals("Mesero")) {
+                                usuario = new Mesero(idUsuario, nombre, apellido, true);
+                            } else {
+                                System.out.println("Cargo inválido. Debe ser 'Administrador' o 'Mesero'.");
+                                break;
+                            }
                         }
                         else {
-                            System.out.println("ID inválido. Debe ser un número entero.");
+                            System.out.println("ID inválido. Debe ser un número entero y positivo.");
                             tcl.next(); // Limpiar el buffer
                             break;
                         }
@@ -84,91 +94,67 @@ public class ManagerSantiago {
                         adminDAO.verEmpleados();
                         break;
                     case 3:
-                        System.out.println("Ingrese la opcion para buscar y modificar el usuario:");
-                        System.out.println("1. Ingrese el ID del usuario");
-                        System.out.println("2. Ingrese el nombre del usuario");
-                        System.out.println("3. Ingrese el apellido del usuario");
-                        System.out.println("-. Salir");
-                        if (tcl.hasNextInt()) {
-                            opc = tcl.nextInt();
-                            switch (opc) {
-                                case 1:
-                                    System.out.println("Ingrese el ID del usuario a modificar:");
-                                    if (tcl.hasNextInt()) {
-                                        idUsuario= tcl.nextInt();
-                                        usuario = adminDAO.getEmpleadoPorId(idUsuario);
-                                        if (usuario != null) {
-                                            System.out.println("Usuario encontrado: " + usuario);
-                                        } else {
-                                            System.out.println("Usuario no encontrado con ID: " + idUsuario);
-                                            usuario = null;
-                                        }
+                        System.out.println("Ingrese el ID del usuario a modificar:");
+                        if (tcl.hasNextInt() && tcl.nextInt() > 0) {
+                            idUsuario = tcl.nextInt();
+                            usuario = adminDAO.getEmpleadoPorId(idUsuario);
+                            if (usuario != null) {
+                                System.out.println("Usuario encontrado: " + usuario);
+                                System.out.println("Ingrese la opción que desea hacer con el usuario encontrado:");
+                                System.out.println("1. Cambiar ID");
+                                System.out.println("2. Cambiar nombre");
+                                System.out.println("3. Cambiar apellido");
+                                System.out.println("4. Cambiar cargo");
+                                System.out.println("5. Eliminar usuario");
+                                System.out.println("-. Salir");
+                                if (tcl.hasNextInt()) {
+                                    opc = tcl.nextInt();
+                                    switch (opc) {
+                                        case 1:
+                                            System.out.println("Ingrese el nuevo ID:");
+                                            if (tcl.hasNextInt()) {
+                                                int newId = tcl.nextInt();
+                                                adminDAO.setEmpleadoId(usuario, newId);
+                                                System.out.println("ID actualizado a: " + newId);
+                                            }
+                                            break;
+                                        case 2:
+                                            System.out.println("Ingrese el nuevo nombre:");
+                                            String newNombre = tcl.nextLine();
+                                            adminDAO.setEmpleadoNombre(usuario, newNombre);
+                                            System.out.println("Nombre actualizado a: " + newNombre);
+                                            break;
+                                        case 3:
+                                            System.out.println("Ingrese el nuevo apellido:");
+                                            String newApellido = tcl.nextLine();
+                                            adminDAO.setEmpleadoApellido(usuario, newApellido);
+                                            System.out.println("Apellido actualizado a: " + newApellido);
+                                            break;
+                                        case 4:
+                                            System.out.println("Ingrese el nuevo cargo (Administrador/Mesero):");
+                                            String newCargo = tcl.nextLine();
+                                            adminDAO.setEmpleadoCargo(usuario, newCargo);
+                                            System.out.println("Cargo actualizado a: " + newCargo);
+                                            break;
+                                        case 5:
+                                            adminDAO.eliminarEmpleado(usuario);
+                                            System.out.println("Usuario eliminado.");
+                                            break;
+                                        default:
+                                            System.out.println("Opción no válida.");
                                     }
-                                    break;
-                                case 2:
-                                    System.out.println("Ingrese el nombre del usuario a modificar:");
-                                    nombre = tcl.nextLine();
-                                    usuario = adminDAO.getEmpleadoPorNombre(nombre);
-                                    if (usuario != null) {
-                                        System.out.println("Usuario encontrado: " + usuario);
-                                    } else {
-                                        System.out.println("Usuario no encontrado con nombre: " + nombre);
-                                        usuario = null;
-                                    }
-                                    break;
-                                case 3:
-                                    System.out.println("Ingrese el apellido del usuario a modificar:");
-                                    apellido = tcl.nextLine();
-                                    usuario = adminDAO.getEmpleadoPorApellido(apellido);
-                                    if (usuario != null) {
-                                        System.out.println("Usuario encontrado: " + usuario);
-                                    } else {
-                                        System.out.println("Usuario no encontrado con apellido: " + apellido);
-                                        usuario = null;
-                                    }
-                                    break;
-                                default:
-                                    System.out.println("Opción no válida.");
+                                }
+                                break;
+                            } else {
+                                System.out.println("Usuario no encontrado con ID: " + idUsuario);
+                                usuario = null;
+                                break;
                             }
+                        } else {
+                            System.out.println("ID inválido. Debe ser un número entero y positivo.");
+                            tcl.next(); // Limpiar el buffer
+                            break;
                         }
-                        System.out.println("Ingrese la opción que desea hacer con el usuario encontrado:");
-                        System.out.println("1. Cambiar ID");
-                        System.out.println("2. Cambiar nombre");
-                        System.out.println("3. Cambiar apellido");
-                        System.out.println("4. Eliminar usuario");
-                        System.out.println("-. Salir");
-                        if (tcl.hasNextInt()) {
-                            opc = tcl.nextInt();
-                            switch (opc) {
-                                case 1:
-                                    System.out.println("Ingrese el nuevo ID:");
-                                    if (tcl.hasNextInt()) {
-                                        int newId = tcl.nextInt();
-                                        adminDAO.setEmpleadoId(usuario, newId);
-                                        System.out.println("ID actualizado a: " + newId);
-                                    }
-                                    break;
-                                case 2:
-                                    System.out.println("Ingrese el nuevo nombre:");
-                                    String newNombre = tcl.nextLine();
-                                    adminDAO.setEmpleadoNombre(usuario, newNombre);
-                                    System.out.println("Nombre actualizado a: " + newNombre);
-                                    break;
-                                case 3:
-                                    System.out.println("Ingrese el nuevo apellido:");
-                                    String newApellido = tcl.nextLine();
-                                    adminDAO.setEmpleadoApellido(usuario, newApellido);
-                                    System.out.println("Apellido actualizado a: " + newApellido);
-                                    break;
-                                case 4:
-                                    adminDAO.eliminarEmpleado(usuario);
-                                    System.out.println("Usuario eliminado.");
-                                    break;
-                                default:
-                                    System.out.println("Opción no válida.");
-                            }
-                        }
-                        break;
                     default:
                         System.out.println("Opción no válida.");
                 }
@@ -176,11 +162,10 @@ public class ManagerSantiago {
         }
     }
 
-    public void menuCocina(AdministradorDAO adminDAO, Scanner tcl, Cocina cocina) {
+    public void menuCocina(AdministradorDAO adminDAO, Scanner tcl) {
         int opc=0;
-        String idPedido = tcl.nextLine();
+        String idPedido = "";
         CocinaDAO cocinaDAO = new CocinaDAO();
-        Pedido pedido = cocinaDAO.verPedidoCocina(cocina, idPedido);
         do {
             System.out.println("=====================");
             System.out.println(" Gestión de cocina ");
@@ -197,28 +182,35 @@ public class ManagerSantiago {
                 switch (opc) {
                     case 1:
                         System.out.println("Ingrese el número de cocineros disponibles:");
-                        if (tcl.hasNextInt()) {
+                        if (tcl.hasNextInt() && tcl.nextInt() >= 0) {
                             int numCocineros = tcl.nextInt();
-                            adminDAO.setCocinerosDisponibles(cocina,numCocineros);
+                            adminDAO.setCocinerosDisponibles(numCocineros);
                             System.out.println("Número de cocineros disponibles actualizado a: " + numCocineros);
+                        } else {
+                            System.out.println("Número de cocineros inválido. Debe ser un número entero y no negativo.");
+                            tcl.next(); // Limpiar el buffer    
                         }
                         break;
                     case 2:
                         System.out.println("Estado de la cocina:");
-                        System.out.println("Cocineros disponibles: " + cocina.getCocinerosDisponibles());
-                        System.out.println("Cocineros ocupados: " + cocina.getCocinerosOcupados());
+                        System.out.println("Cocineros disponibles: " + Cocina.getCocinerosDisponibles());
+                        System.out.println("Cocineros ocupados: " + Cocina.getCocinerosOcupados());
+                        System.out.println("Pedidos en espera:");
+                        cocinaDAO.verEnEspera();
                         System.out.println("Pedidos en preparación:");
-                        cocina.getPedidos();
+                        cocinaDAO.verEnPreparacion();
+                        System.out.println("Pedidos entregados:");
+                        cocinaDAO.verPedidosEntregados();
+                        System.out.println("Pedidos cancelados:");
+                        cocinaDAO.verPedidosEliminados();
                         break;
                     case 3:
                         System.out.println("Ingrese el ID del pedido a comenzar a preparar:");
-                        if (tcl.hasNextLine()) {
+                        if (tcl.hasNextLine() && !tcl.nextLine().isEmpty()) {
                             idPedido = tcl.nextLine();
-                            cocinaDAO = new CocinaDAO();
-                            pedido = cocinaDAO.verPedidoCocina(cocina, idPedido);
-                            if (pedido != null) {
-                                cocinaDAO.cocinarPedido(pedido, cocina);
+                            if (CocinaDAO.buscarPedidoId(idPedido, Cocina.getEnEspera())) {
                                 System.out.println("Pedido con ID " + idPedido + " ha comenzado a prepararse.");
+                                CocinaDAO.comenzarPreparacion(CocinaDAO.getPedidoId(idPedido));
                             } else {
                                 System.out.println("Pedido no encontrado en la cocina.");
                             }
@@ -229,12 +221,10 @@ public class ManagerSantiago {
                         break;
                     case 4:
                         System.out.println("Ingrese el ID del pedido a finalizar:");
-                        if (tcl.hasNextLine()) {
+                        if (tcl.hasNextLine() && !tcl.nextLine().isEmpty()) {
                             idPedido = tcl.nextLine();
-                            cocinaDAO = new CocinaDAO();
-                            pedido = cocinaDAO.verPedidoCocina(cocina, idPedido);
-                            if (pedido != null) {
-                                cocinaDAO.entregarPedido(pedido, cocina);
+                            if (CocinaDAO.buscarPedidoId(idPedido, Cocina.getEnPreparacion())) {
+                                CocinaDAO.entregarPedido(CocinaDAO.getPedidoId(idPedido));
                                 System.out.println("Pedido con ID " + idPedido + " ha sido finalizado.");
                             } else {
                                 System.out.println("Pedido no encontrado en la cocina.");
@@ -245,10 +235,8 @@ public class ManagerSantiago {
                         System.out.println("Ingrese el ID del pedido a cancelar:");
                         if (tcl.hasNextLine()) {
                             idPedido = tcl.nextLine();
-                            cocinaDAO = new CocinaDAO();
-                            pedido = cocinaDAO.verPedidoCocina(cocina, idPedido);
-                            if (pedido != null) {
-                                cocinaDAO.cancelarPedido(pedido, cocina);
+                            if (CocinaDAO.buscarPedidoId(idPedido, Cocina.getEnPreparacion()) || CocinaDAO.buscarPedidoId(idPedido, Cocina.getEnEspera())) {
+                                CocinaDAO.cancelarPedido(CocinaDAO.getPedidoId(idPedido));
                                 System.out.println("Pedido con ID " + idPedido + " ha sido cancelado.");
                             } else {
                                 System.out.println("Pedido no encontrado en la cocina.");

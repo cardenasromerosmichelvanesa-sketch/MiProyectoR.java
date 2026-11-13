@@ -3,43 +3,65 @@ import java.util.List;
 import java.util.ArrayList;
 public class Cocina {
 
-    private int cocinerosDisponibles;
-    private int cocinerosOcupados;
-    private List<Pedido> enPreparación = new ArrayList<>();
+    private static int cocinerosDisponibles=0;
+    private static int cocinerosOcupados=0;
+    private static List<Pedido> enEspera = new ArrayList<>();
+    private static List<Pedido> enPreparación = new ArrayList<>();
+    private static List<Pedido> pedidosEntregados = new ArrayList<>();
+    private static List<Pedido> pedidosEliminados = new ArrayList<>();
 
-    public Cocina(int cocinerosDisponibles) {
-        this.cocinerosDisponibles = cocinerosDisponibles;
-        this.cocinerosOcupados =0;
-    }
-
-    public int getCocinerosDisponibles() {
+    public static int getCocinerosDisponibles() {
         return cocinerosDisponibles;
     }
-    public void setCocinerosDisponibles(int cocinerosDisponibles) {
-        this.cocinerosDisponibles = cocinerosDisponibles;
+    public static void setCocinerosDisponibles(int cocinerosDisponibles) {
+        Cocina.cocinerosDisponibles = cocinerosDisponibles;
     }
 
-    public int getCocinerosOcupados() {
+    public static int getCocinerosOcupados() {
         return cocinerosOcupados;
     }
 
-    public void setCocinerosOcupados(int cocinerosOcupados) {
-        this.cocinerosOcupados = cocinerosOcupados;
+    public static void setCocinerosOcupados(int cocinerosOcupados) {
+        Cocina.cocinerosOcupados = cocinerosOcupados;
     }
 
-    public boolean disponibilidad(Cocina cocina){
-        boolean aux=cocina.getCocinerosDisponibles()>cocina.getCocinerosOcupados();
+    public static boolean disponibilidad(){
+        boolean aux=Cocina.getCocinerosDisponibles()>Cocina.getCocinerosOcupados();
         return aux;
     }
 
-    public List<Pedido> getPedidos() {
+    public static List<Pedido> getEnEspera() {
+        return enEspera;
+    }
+    public static void añadirPedidoEnEspera(Pedido pedido) {
+        enEspera.add(pedido);
+    }
+    public static void eliminarPedidoEnEspera(Pedido pedido) {
+        enEspera.remove(pedido);
+    }
+
+    public static List<Pedido> getEnPreparacion() {
         return enPreparación;
     }
-    public void añadirPedido(Pedido pedido) {
+    public static void añadirEnPreparacion(Pedido pedido) {
         enPreparación.add(pedido);
     }
-    public void eliminarPedido(Pedido pedido) {
+    public static void eliminarEnPreparacion(Pedido pedido) {
         enPreparación.remove(pedido);
+    }
+
+    public static List<Pedido> getPedidosEntregados() {
+        return pedidosEntregados;
+    }
+    public static void añadirPedidosEntregados(Pedido pedido) {
+        pedidosEntregados.add(pedido);
+    }
+
+    public static List<Pedido> getPedidosEliminados() {
+        return pedidosEliminados;
+    }
+    public static void añadirPedidosEliminados(Pedido pedido) {
+        Cocina.pedidosEliminados.add(pedido);
     }
     
 }

@@ -6,17 +6,18 @@ public class Usuario {
     private int idUsuario;
     private String nombre;
     private String apellido;
-    public static final List<Usuario> empleados=new ArrayList<Usuario>();
-    
+    private String cargo;
+    private static List<Usuario> empleados = new ArrayList<>();
 
-    public Usuario(int idUsuario, String nombre, String apellido) {
+    public Usuario(int idUsuario, String nombre, String apellido, String cargo) {
         this.idUsuario = idUsuario;
         this.nombre = nombre;
         this.apellido = apellido;
+        this.cargo = cargo;
         empleados.add(this);
     }
 
-    public int getIdo() {
+    public int getId() {
         return idUsuario;
     }
     public void setId(int idUsuario) {
@@ -36,5 +37,25 @@ public class Usuario {
     public void setApellido(String apellido) {
         this.apellido = apellido;
     }
-    
+
+    public String getCargo() {
+        return cargo;
+    }
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
+    }
+
+    public static void agregarEmpleado(Usuario usuario) {
+        empleados.add(usuario);
+    }
+    public static void actualizarEmpleado(int index, Usuario usuario) {
+        empleados.set(index, usuario);
+    }
+    public static void eliminarEmpleado(Usuario usuario) {
+        empleados.remove(usuario);
+    }
+    public static List<Usuario> getEmpleados() {
+        return empleados;
+    }
+
 }

@@ -19,7 +19,7 @@ public class Mesero extends Usuario{
      * @param meseroDisponible true si está libre, false si está ocupado
      */
     public Mesero(int idUsuario, String nombre, String apellido, boolean meseroDisponible) {
-        super(idUsuario, nombre, apellido);
+        super(idUsuario, nombre, apellido, "Mesero");
         this.meseroDisponible = meseroDisponible;
     }
 
@@ -61,6 +61,7 @@ public class Mesero extends Usuario{
         Pedido pedido = new Pedido(Pedido.siguienteId(), mesa.getNumMesa(), "Pendiente", 0.0);
         pedido.setMesero(this);
         System.out.println("Pedido creado correctamente");
+        Cocina.añadirPedidoEnEspera(pedido);
         return pedido;
     }
     
@@ -132,12 +133,9 @@ public class Mesero extends Usuario{
      * Cambia el estado del pedido a entregado
      * @param pedido pedido a entregar
      */
-    public void entregarPedido(Pedido pedido, List<Pedido> Reporte) {
+    public void entregarPedido(Pedido pedido) {
         if (pedido != null && "Listo".equalsIgnoreCase(pedido.getEstado())) {
             pedido.setEstado("Entregado");
-            if (Reporte != null) {
-                Reporte.add(pedido);
-            }
             System.out.println("Pedido entregado");
         } else {
             System.out.println("El pedido no está listo para entregar");

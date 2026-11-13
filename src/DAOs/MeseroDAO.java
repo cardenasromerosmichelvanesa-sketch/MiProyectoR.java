@@ -59,7 +59,7 @@ public class MeseroDAO {
      */
     public Mesero buscarMesero(int id) {
         for (Mesero m : listaMeseros) {
-            if (m.getIdo() == id) {
+            if (m.getId() == id) {
                 return m;
             }
         }
@@ -121,7 +121,7 @@ public class MeseroDAO {
     public void entregarPedido(Mesero mesero, Pedido pedido) {
         if (mesero != null && pedido != null) {
             // Mesero.entregarPedido necesita también la lista de reporte
-            mesero.entregarPedido(pedido, reporte);
+            mesero.entregarPedido(pedido);
         }
     }
 

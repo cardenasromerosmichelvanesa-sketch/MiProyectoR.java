@@ -1,7 +1,5 @@
 package src.DAOs;
 import src.entities.*;
-import java.util.List;
-import java.util.ArrayList;
 public class AdministradorDAO {
     
     public AdministradorDAO() {
@@ -11,55 +9,58 @@ public class AdministradorDAO {
         System.out.println(pedidoDAO.listaPedidos());
     }
 
-
-    /**
-     * Metodo que cambia el mesero asignado a una mesa
-     * @param mesa Mesa a la que se le asigna el mesero
-     * @param mesero Mesero que sera asignado a la mesa
-     */
-    public void meseroAsignadoMesas(Mesa mesa, Mesero mesero) {
-        mesa.setMesero(mesero);
-    }
-    /**
-     * Metodo para ver el listado de todas las mesas
-     * @param mesas Lista que se usa para registrar las mesas
-     */
-    public void verMesa(List<Mesa> mesas) {
-        System.out.println(mesas);
-    }
-    /**
-     * Metodo que asigna un mesero a una mesa
-     * @param pedido Pedido destinado a la mesa
-     * @param mesa Mesa a la que va el pedido
-     */
-    public void asignarMesa(Pedido pedido, Mesa mesa) {
-        if (mesa.isDisponible()) {
-            pedido.setMesa(mesa.getNumMesa());
-            mesa.setDisponible(false);
-        }
-        else {
-            System.out.println("Mesa no disponible");
-        }
-    }
     /**
      * Metodo para ver el listado de empleados
      */
     public void verEmpleados() {
-        System.out.println(Usuario.empleados);
+        Empleados.verEmpleados();
     }
     /**
      * Metodo para añadir un empleado a la lista de empleados
      * @param usuario Usuario que se agrega a la lista
      */
     public void añadirEmpleado(Usuario usuario) {
-        Usuario.empleados.add(usuario);
+        if (usuario != null) {
+            if (Empleados.añadirEmpleado(usuario)) {
+                System.out.println("Empleado añadido correctamente");
+            } else {
+                System.out.println("No se pudo añadir el empleado");
+            }
+        } else {
+            System.out.println("El usuario no puede ser nulo");
+        }
     }
+
+    public Usuario getEmpleadoPorId(int idUsuario) {
+        if (Empleados.buscarEmpleadoID(idUsuario)) {
+            if (Empleados.getEmpleadoID(idUsuario) != null) {
+                return Empleados.getEmpleadoID(idUsuario);
+            } else {
+                System.out.println("El empleado no se encuentra en la lista");
+                return null;
+            }
+        } else {
+            System.out.println("El empleado no se encuentra en la lista");
+            return null;
+        }
+    }
+
     /**
      * Metodo para eliminar un empleado a la lista de empleados
      * @param usuario Usuario que se elimina de la lista
      */
     public void eliminarEmpleado(Usuario usuario) {
-        Usuario.empleados.remove(usuario);
+        
+        if (usuario != null && Empleados.buscarEmpleadoID(usuario.getId())) {
+            if (Empleados.eliminarEmpleado(usuario)) {
+                System.out.println("Empleado eliminado correctamente");
+            }
+            else {
+                System.out.println("No se pudo eliminar el empleado");
+            }
+        } else {
+            System.out.println("No se pudo eliminar el empleado");
+        }
     }
     /**
      * Metodo para cambiar el id de un empleado
@@ -67,7 +68,24 @@ public class AdministradorDAO {
      * @param newId Nuevo id que reemplazara al antiguo
      */
     public void setEmpleadoId(Usuario usuario, int newId) {
-        usuario.setId(newId);
+        if (usuario != null) {
+            if (newId > 0) {
+               if (Empleados.buscarEmpleadoID(usuario.getId())) {
+                    usuario.setId(newId);
+                    if (Empleados.actualizarEmpleado(usuario, Usuario.getEmpleados().indexOf(usuario))) {
+                        System.out.println("ID del empleado actualizado correctamente");
+                    } else {
+                        System.out.println("No se pudo actualizar el ID del empleado");
+                    }
+                } else {
+                    System.out.println("El empleado no se encuentra en la lista");
+                }
+            } else {
+                System.out.println("El nuevo id no puede ser nulo o vacío");
+            }
+        } else {
+            System.out.println("El usuario no puede ser nulo");
+        }
     }
     /**
      * Metodo para cambiar el nombre de un empleado
@@ -75,7 +93,20 @@ public class AdministradorDAO {
      * @param newNombre Nuevo nombre que reemplazara al antiguo
      */
     public void setEmpleadoNombre(Usuario usuario, String newNombre) {
-        usuario.setNombre(newNombre);
+        if (usuario != null) {
+            if (newNombre != null && !newNombre.isEmpty()) {
+                usuario.setNombre(newNombre);
+                if (Empleados.actualizarEmpleado(usuario, Usuario.getEmpleados().indexOf(usuario))) {
+                    System.out.println("Nombre del empleado actualizado correctamente");
+                } else {
+                    System.out.println("No se pudo actualizar el nombre del empleado");
+                }
+            } else {
+                System.out.println("El nuevo nombre es inválido");
+            }
+        } else {
+            System.out.println("El usuario no puede ser nulo");
+        }
     }
     /**
      * Metodo para cambiar el apellido de un empleado
@@ -83,77 +114,54 @@ public class AdministradorDAO {
      * @param newApellido Nuevo apellido que reemplazara al antiguo
      */
     public void setEmpleadoApellido(Usuario usuario, String newApellido) {
-        usuario.setApellido(newApellido);
-    }
-    /**
-     * Metodo para obtener un empleado por su id
-     * @param id Id del empleado que se desea obtener
-     * @return Usuario con el id especificado, o null si no se encuentra
-     */
-    public Usuario getEmpleadoPorId(int id) {
-        for (Usuario empleado : Usuario.empleados) {
-            if (empleado.getIdo() == id) {
-                return empleado;
+        if (usuario != null) {
+            if (newApellido != null && !newApellido.isEmpty()) {
+                usuario.setApellido(newApellido);
+                if (Empleados.actualizarEmpleado(usuario, Usuario.getEmpleados().indexOf(usuario))) {
+                    System.out.println("Apellido del empleado actualizado correctamente");
+                } else {
+                    System.out.println("No se pudo actualizar el apellido del empleado");
+                }
+            } else {
+                System.out.println("El nuevo apellido es inválido");
             }
+        } else {
+            System.out.println("El usuario no puede ser nulo");
         }
-        return null; // Retorna null si no se encuentra el empleado
     }
     /**
-     * Metodo para obtener un empleado por su nombre
-     * @param nombre Nombre del empleado que se desea obtener
-     * @return Usuario con el nombre especificado, o null si no se encuentra
+     * Metodo para cambiar el cargo de un empleado
+     * @param usuario Usuario al que se aplica el cambio
+     * @param newCargo Nuevo cargo que reemplazara al antiguo
      */
-    public Usuario getEmpleadoPorNombre(String nombre) {
-        for (Usuario empleado : Usuario.empleados) {
-            if (empleado.getNombre().equals(nombre)) {
-                return empleado;
+    public void setEmpleadoCargo(Usuario usuario, String newCargo) {
+        if (usuario != null) {
+            if (newCargo != null && !newCargo.isEmpty() && (newCargo.equals("Mesero") || newCargo.equals("Administrador"))) {
+                usuario.setCargo(newCargo);
+                if (Empleados.actualizarEmpleado(usuario, Usuario.getEmpleados().indexOf(usuario))) {
+                    System.out.println("Cargo del empleado actualizado correctamente");
+                } else {
+                    System.out.println("No se pudo actualizar el cargo del empleado");
+                }
+            } else {
+                System.out.println("El nuevo cargo es inválido");
             }
+        } else {
+            System.out.println("El usuario no puede ser nulo");
         }
-        return null; // Retorna null si no se encuentra el empleado
     }
-    /**
-     * Metodo para obtener un empleado por su apellido
-     * @param apellido Apellido del empleado que se desea obtener
-     * @return Usuario con el apellido especificado, o null si no se encuentra
-     */
-    public Usuario getEmpleadoPorApellido(String apellido) {
-        for (Usuario empleado : Usuario.empleados) {
-            if (empleado.getApellido().equals(apellido)) {
-                return empleado;
-            }
-        }
-        return null; // Retorna null si no se encuentra el empleado
-    }
-
-    /**
-     * Metodo para añadir un producto a la lista menú
-     * @param menu Lista usada como menú
-     * @param producto Producto agregado a la lista
-     * @return Lista usada mas el nuevo producto
-     */
-    public List<Producto> anadirProductoMenu(List<Producto> menu, Producto producto) {
-        menu.add(producto);
-        return menu;
-    }
-    /**
-     * Metodo para eliminar un producto de la lista menú
-     * @param menu Lista usada como menú
-     * @param producto Producto a eliminar de la lista
-     * @return Lista usada menos el producto enviado
-     */
-    public List<Producto> eliminarProductoMenu(List<Producto> menu, Producto producto) {
-        menu.remove(producto);
-        return menu;
-    }
-
     
     /**
      * Metodo para cambiar los cocineros disponible en cocina
      * @param cocina Cocina en uso
      * @param disponibles Nuevo numero de cocineros disponibles
      */
-    public void setCocinerosDisponibles(Cocina cocina, int disponibles){
-        cocina.setCocinerosDisponibles(disponibles);
+    public void setCocinerosDisponibles(int newDisponibles){
+        if (newDisponibles >= Cocina.getCocinerosOcupados()) {
+            Cocina.setCocinerosDisponibles(newDisponibles);
+        } else {
+            System.out.println("El número de cocineros disponibles no puede ser menor al número de cocineros ocupados");
+        }
     }
 
 }
