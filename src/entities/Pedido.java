@@ -10,12 +10,23 @@ import java.util.List;
  */
 public class Pedido {
 
+    private static int contador = 0;
+
     private String id;
     private int mesa;
     private String estado;
     private double monto;
     private Mesero mesero;
     private List<DetallePedido> detalles = new ArrayList<>();
+
+    /**
+     * Genera el siguiente id de pedido (1, 2, 3...), fácil de escribir
+     * @return id nuevo
+     */
+    public static String siguienteId() {
+        contador++;
+        return String.valueOf(contador);
+    }
 
     /**
      * Crea un pedido vacío con estado inicial "Pendiente"
@@ -113,6 +124,7 @@ public class Pedido {
     public void agregarDetalle(DetallePedido detalle) {
         if (detalle != null) {
             detalles.add(detalle);
+            monto += detalle.getSubtotal();
         }
     }
 

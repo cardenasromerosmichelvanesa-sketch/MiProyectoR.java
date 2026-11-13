@@ -129,7 +129,7 @@ public class Mesa {
         System.out.println("Mesa " + numMesa + " liberada");
     }
 
-   
+    @Override
     public String toString() {
         return "Mesa " + numMesa + " (capacidad: " + capacidad + ", "
                 + (disponible ? "disponible" : "ocupada"

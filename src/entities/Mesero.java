@@ -58,7 +58,7 @@ public class Mesero extends Usuario{
             System.out.println("La mesa " + mesa.getNumMesa() + " no está asignada a este mesero");
             return null;
         }
-        Pedido pedido = new Pedido("ped" + System.currentTimeMillis(), mesa.getNumMesa(), "Pendiente", 0.0);
+        Pedido pedido = new Pedido(Pedido.siguienteId(), mesa.getNumMesa(), "Pendiente", 0.0);
         pedido.setMesero(this);
         System.out.println("Pedido creado correctamente");
         return pedido;

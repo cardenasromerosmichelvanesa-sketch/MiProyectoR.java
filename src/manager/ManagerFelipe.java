@@ -195,10 +195,8 @@ public class ManagerFelipe {
                     System.out.println("Este mesero no tiene pedidos");
                 }
                 for (Pedido pe : mios) {
-                    System.out.println("  " + pe);
-                    for (DetallePedido d : pe.getDetalles()) {
-                        System.out.println("     - " + d);
-                    }
+                    mostrarDetallePedido(pe);
+                    System.out.println();
                 }
                 break;
         }
@@ -232,16 +230,31 @@ public class ManagerFelipe {
         }
         pedidoDAO.registrarPedido(pedido);
 
-        // Detalle del pedido: producto y cantidad
+        // Detalle del pedido: producto, precio y cantidad
+        agregarProductosAPedido(pedido);
+        System.out.println("Pedido guardado:");
+        mostrarDetallePedido(pedido);
+    }
+
+    /**
+     * Pide producto, precio y cantidad, y los agrega al pedido (las veces que se quiera).
+     * @param pedido pedido al que se agregan los productos
+     */
+    private void agregarProductosAPedido(Pedido pedido) {
         String mas;
         do {
             System.out.print("ID Producto: ");
             int idProducto = sc.nextInt();
+            sc.nextLine();
+            System.out.print("Nombre del producto: ");
+            String nombre = sc.nextLine();
+            System.out.print("Precio: ");
+            double precio = sc.nextDouble();
             System.out.print("Cantidad: ");
             int cantidad = sc.nextInt();
             sc.nextLine();
             try {
-                DetallePedido detalle = new DetallePedido(idProducto, cantidad);
+                DetallePedido detalle = new DetallePedido(idProducto, nombre, precio, cantidad);
                 pedido.agregarDetalle(detalle);
                 detalleDAO.registrar(detalle);
             } catch (IllegalArgumentException e) {
@@ -250,62 +263,77 @@ public class ManagerFelipe {
             System.out.print("¿Agregar otro producto? (s/n): ");
             mas = sc.nextLine().trim();
         } while (mas.equalsIgnoreCase("s"));
-        System.out.println("Pedido guardado: " + pedido);
     }
 
     public void crudPedido() {
         /**
-         * fucionalida 3: crud pedido
-         * Crea pedidos ligados a una mesa
+         * funcionalidad 3: pedidos
+         * Muestra solo los pedidos pendientes
          */
-        System.out.println("FUNCIONALIDAD 3: CRUD PEDIDO");
-        System.out.println("1.Crear Pedido | 2.Lista Pendientes | 3.Total Ventas");
-        System.out.print("Opcion: ");
-        int op = sc.nextInt();
-        switch(op) {
-            case 1:
-                /**
-                 * Pedido necesita (Mesa, estado, monto) según entities.Pedido
-                 */
-                System.out.print("Num mesa para pedido: ");
-                Mesa mesa = mesaDAO.buscarMesa(sc.nextInt());
-                if(mesa == null){ System.out.println("Mesa no existe"); return; }
-              Pedido p = new Pedido("ped" + System.currentTimeMillis(), mesa.getNumMesa(), "Pendiente", 0.0);
-                pedidoDAO.registrarPedido(p);
-                System.out.println("Pedido creado en mesa " + mesa.getNumMesa());
-                break;
-            case 2:
-                /**
-                 * Filtra por estado usando buscarPorEstado("Pendiente")
-                 */
-                System.out.println("Pendientes: " + pedidoDAO.buscarPorEstado("Pendiente").size());
-                break;
-            case 3:
-                /**
-                 * Suma todos los montos con calcularTotalVentas()
-                 */
-                System.out.println("Total ventas: " + pedidoDAO.calcularTotalVentas());
-                break;
+        System.out.println("FUNCIONALIDAD 3: PEDIDOS PENDIENTES");
+        java.util.List<Pedido> pendientes = pedidoDAO.buscarPorEstado("Pendiente");
+        if (pendientes.isEmpty()) {
+            System.out.println("No hay pedidos pendientes");
+            return;
+        }
+        for (Pedido pe : pendientes) {
+            System.out.println("  " + pe);
         }
     }
 
     public void crudDetallePedido() {
         /**
-         * Ffuncionalidad 4: crud detallepedido
-         * Guarda qué producto y cuántos se pidieron
+         * funcionalidad 4: detalle de pedido
+         * Pide el id del pedido y muestra mesero, productos, precios y estado
          */
-        System.out.println(" FUNCIONALIDAD 4: CRUD DETALLE PEDIDO");
-        System.out.print("ID Producto: ");
-        int id = sc.nextInt();
-        System.out.print("Cantidad: ");
-        int cant = sc.nextInt();
-       /**
-        * El DAO espera getIdProducto() y getCantidad() que ya existen en la Entity
-        */
-        DetallePedido detalle = new DetallePedido(id, cant);
-        detalleDAO.registrar(detalle);
-        System.out.println("Detalle guardado");
+        System.out.println(" FUNCIONALIDAD 4: DETALLE DE PEDIDO");
+        System.out.println("1.Ver detalle de un pedido | 2.Agregar productos a un pedido");
+        System.out.print("Opcion: ");
+        int op = sc.nextInt();
+        sc.nextLine();
+        if (op != 1 && op != 2) {
+            return;
+        }
+        if (pedidoDAO.listaPedidos().isEmpty()) {
+            System.out.println("No hay pedidos registrados");
+            return;
+        }
+        System.out.print("ID del pedido: ");
+        Pedido pedido = pedidoDAO.buscarPorId(sc.nextLine().trim());
+        if (pedido == null) {
+            System.out.println("El pedido no existe");
+            return;
+        }
+        if (op == 2) {
+            if (!"Pendiente".equalsIgnoreCase(pedido.getEstado())) {
+                System.out.println("Solo se pueden agregar productos a pedidos pendientes");
+                return;
+            }
+            agregarProductosAPedido(pedido);
+        }
+        mostrarDetallePedido(pedido);
     }
+
+    /**
+     * Muestra el pedido con su mesero, estado, productos, precios y total
+     * @param pedido pedido a mostrar
+     */
+    private void mostrarDetallePedido(Pedido pedido) {
+        System.out.println("Pedido " + pedido.getId() + " | Mesa " + pedido.getMesa());
+        System.out.println("Mesero: " + (pedido.getMesero() != null
+                ? pedido.getMesero().getNombre() + " " + pedido.getMesero().getApellido() : "sin mesero"));
+        System.out.println("Estado: " + pedido.getEstado());
+        if (pedido.getDetalles().isEmpty()) {
+            System.out.println("Sin productos");
+        }
+        for (DetallePedido d : pedido.getDetalles()) {
+            System.out.println("  - " + d.getNombreProducto() + " (ID " + d.getIdProducto() + ")"
+                    + " | precio: $" + d.getPrecio() + " | cantidad: " + d.getCantidad()
+                    + " | subtotal: $" + d.getSubtotal());
+        }
+        System.out.println("Total: $" + pedido.getMonto());
+    }
+
     public void mostrarMenuPrincipal() {
         /**
          * Menu primcipal

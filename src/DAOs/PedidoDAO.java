@@ -36,6 +36,20 @@ public class PedidoDAO {
     }
 
     /**
+     * Busca un pedido por su id
+     * @param id id del pedido
+     * @return el pedido o null si no existe
+     */
+    public Pedido buscarPorId(String id) {
+        for (Pedido p : listaPedidos) {
+            if (p.getId() != null && p.getId().equals(id)) {
+                return p;
+            }
+        }
+        return null;
+    }
+
+    /**
      * Pedidos hechos por un mesero
      * @param mesero mesero a buscar
      * @return lista de pedidos de ese mesero
