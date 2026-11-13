@@ -1,11 +1,9 @@
 package src.manager;
 
-import src.DAOs.ClienteDAO;
 import src.DAOs.DetallePedidoDAO;
 import src.DAOs.MesaDAO;
 import src.DAOs.MeseroDAO;
 import src.DAOs.PedidoDAO;
-import src.entities.Cliente;
 import src.entities.DetallePedido;
 import src.entities.Mesa;
 import src.entities.Mesero;
@@ -21,7 +19,6 @@ public class ManagerFelipe {
     private PedidoDAO pedidoDAO = new PedidoDAO();
     private DetallePedidoDAO detalleDAO = new DetallePedidoDAO();
     private MesaDAO mesaDAO = new MesaDAO();
-    private ClienteDAO clienteDAO = new ClienteDAO();
     /**
      *  Scanner para leer lo que escribe el usuario
      */
@@ -180,7 +177,7 @@ public class ManagerFelipe {
     }
 
     /**
-     * Menú de pedidos de un mesero: crear pedido (mesa, cliente y detalle) o ver sus pedidos
+     * Menú de pedidos de un mesero: crear pedido (mesa y detalle) o ver sus pedidos
      * @param mesero mesero que atiende
      */
     private void menuPedidosMesero(Mesero mesero) {
@@ -208,7 +205,7 @@ public class ManagerFelipe {
     }
 
     /**
-     * Crea un pedido: mesero (ya elegido), número de mesa, cliente y luego el detalle
+     * Crea un pedido: mesero (ya elegido), número de mesa y luego el detalle
      * (producto y cantidad, tantas veces como se quiera).
      * @param mesero mesero que hace el pedido
      */
@@ -229,17 +226,10 @@ public class ManagerFelipe {
             System.out.println("Mesa no existe");
             return;
         }
-        System.out.print("Cliente (contacto): ");
-        String contacto = sc.nextLine();
-        System.out.print("Cliente (ubicación): ");
-        String ubicacion = sc.nextLine();
-        Cliente cliente = new Cliente(contacto, ubicacion);
-
-        Pedido pedido = mesero.crearPedido(mesa, cliente);
+        Pedido pedido = mesero.crearPedido(mesa);
         if (pedido == null) {
             return;
         }
-        clienteDAO.registra(cliente);
         pedidoDAO.registrarPedido(pedido);
 
         // Detalle del pedido: producto y cantidad
@@ -316,27 +306,15 @@ public class ManagerFelipe {
         detalleDAO.registrar(detalle);
         System.out.println("Detalle guardado");
     }
-       /**
-        *  Funcionalidad 5: crud cliente
-        * Simulación simple de registro de cliente
-        */ 
-    public void crudCliente() {
-        System.out.println("FUNCIONALIDAD 5: CRUD CLIENTE ");
-        sc.nextLine();
-        System.out.print("Nombre cliente: ");
-        String nombre = sc.nextLine();
-        System.out.println("Cliente " + nombre + " registrado");
-    }
-
     public void mostrarMenuPrincipal() {
         /**
          * Menu primcipal
-         * Muestra las 5 funcionalidades en bucle hasta que el usuario ponga 0
+         * Muestra las 4 funcionalidades en bucle hasta que el usuario ponga 0
          */
         int op;
         do {
-            System.out.println("  MI MANAGER - 5 FUNCIONALIDADES");
-            System.out.println("1. MESA | 2. MESERO | 3. PEDIDO | 4. DETALLE | 5. CLIENTE | 0.Salir");
+            System.out.println("  MI MANAGER - 4 FUNCIONALIDADES");
+            System.out.println("1. MESA | 2. MESERO | 3. PEDIDO | 4. DETALLE | 0.Salir");
             System.out.print("Opción: ");
             op = sc.nextInt();
             switch(op){
@@ -344,7 +322,6 @@ public class ManagerFelipe {
                 case 2: crudMesero(); break;
                 case 3: crudPedido(); break;
                 case 4: crudDetallePedido(); break;
-                case 5: crudCliente(); break;
             }
         } while(op != 0);
     }
