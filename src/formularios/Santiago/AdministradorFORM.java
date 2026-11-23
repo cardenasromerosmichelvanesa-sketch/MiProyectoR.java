@@ -2,7 +2,7 @@
 package src.formularios.Santiago;
 
 import javax.swing.table.DefaultTableModel;
-
+import src.entities.Usuario;
 public class AdministradorFORM extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AdministradorFORM.class.getName());
@@ -17,6 +17,14 @@ public class AdministradorFORM extends javax.swing.JFrame {
         mt.setColumnIdentifiers(ids);
 
         tblUsuarios.setModel(mt);
+
+        new Usuario(1, "Juan", "Pérez", "Administrador");
+new Usuario(2, "María", "Gómez", "Mesero");
+new Usuario(3, "Carlos", "López", "Cocinero");
+
+
+        recargarUsuarios();
+    
 
     }
 
@@ -138,6 +146,11 @@ public class AdministradorFORM extends javax.swing.JFrame {
             }
         ));
         tblUsuarios.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tblUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblUsuariosMousClik(evt);
+            }
+        });
         scrollUsuarios.setViewportView(tblUsuarios);
         tblUsuarios.getAccessibleContext().setAccessibleName("");
         tblUsuarios.getAccessibleContext().setAccessibleDescription("");
@@ -497,6 +510,19 @@ public class AdministradorFORM extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCargoActActionPerformed
 
+    private void tblUsuariosMousClik(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblUsuariosMousClik
+        int fila = tblUsuarios.getSelectedRow();
+
+        txtIdAct.setText(tblUsuarios.getValueAt(fila, 0).toString());
+        txtNombreAct.setText(tblUsuarios.getValueAt(fila, 1).toString());
+        txtApellidoAct.setText(tblUsuarios.getValueAt(fila, 2).toString());
+        txtCargoAct.setText(tblUsuarios.getValueAt(fila, 3).toString());
+        
+        txtNewID.setText(tblUsuarios.getValueAt(fila, 0).toString());
+        txtNewNombre.setText(tblUsuarios.getValueAt(fila, 1).toString());
+        txtNewApellido.setText(tblUsuarios.getValueAt(fila, 2).toString());
+    }//GEN-LAST:event_tblUsuariosMousClik
+
     /**
      * @param args the command line arguments
      */
@@ -520,6 +546,7 @@ public class AdministradorFORM extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new AdministradorFORM().setVisible(true));
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -567,4 +594,18 @@ public class AdministradorFORM extends javax.swing.JFrame {
     private javax.swing.JTextField txtNewNombre;
     private javax.swing.JTextField txtNombreAct;
     // End of variables declaration//GEN-END:variables
+
+    private void recargarUsuarios() {
+        mt.setRowCount(0); // Limpia la tabla
+
+        for (Usuario user : Usuario.getEmpleados()) {
+            mt.addRow(new Object[]{
+                user.getId(),
+                user.getNombre(),
+                user.getApellido(),
+                user.getCargo()
+            });
+        }
+    }
+    
 }
