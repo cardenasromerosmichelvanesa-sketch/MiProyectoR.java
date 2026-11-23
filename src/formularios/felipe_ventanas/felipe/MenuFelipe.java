@@ -1,4 +1,4 @@
-package src.formularios.felipe;
+package src.formularios.felipe_ventanas.felipe;
 
 import java.awt.GridLayout;
 import javax.swing.BorderFactory;

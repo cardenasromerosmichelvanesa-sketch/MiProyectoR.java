@@ -1,4 +1,4 @@
-package src.vista;
+package src.formularios;
 
 import javax.swing.*;
 import java.awt.*;

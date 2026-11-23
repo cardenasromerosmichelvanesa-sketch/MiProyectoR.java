@@ -34,7 +34,7 @@ public class mainPrincipal {
     } 
 
 
-        ManagerFelipe managerFelipe = new ManagerFelipe();
+        ManagerFelipe ManagerFelipe = new ManagerFelipe();
 
         Scanner scanner = new Scanner(System.in);
 
@@ -91,7 +91,6 @@ public class mainPrincipal {
         scanner.close();
     }
 
-    private static void menuFelipe(ManagerFelipe manager, Scanner scanner) {
 
     private static void menuSantiago(
             ManagerSantiago manager,

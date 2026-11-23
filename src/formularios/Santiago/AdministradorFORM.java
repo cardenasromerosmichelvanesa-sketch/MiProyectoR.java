@@ -1,16 +1,23 @@
 
-package Santiago;
+package src.formularios.Santiago;
+
+import javax.swing.table.DefaultTableModel;
 
 public class AdministradorFORM extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AdministradorFORM.class.getName());
 
+    DefaultTableModel mt = new DefaultTableModel();
     /**
      * Creates new form AdministradorFORM
      */
     public AdministradorFORM() {
         initComponents();
-        
+        String[] ids = {"ID", "Nombre", "Apellido", "Cargo"};
+        mt.setColumnIdentifiers(ids);
+
+        tblUsuarios.setModel(mt);
+
     }
 
     /**

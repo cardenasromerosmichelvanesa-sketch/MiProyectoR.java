@@ -1,4 +1,4 @@
-package src.formularios.felipe;
+package src.formularios.felipe_ventanas.felipe;
 
 import src.DAOs.DetallePedidoDAO;
 import src.DAOs.MesaDAO;

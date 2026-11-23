@@ -1,4 +1,4 @@
-package src.vista;
+package src.entities;
 
 /**
  * Interfaz que define el comportamiento

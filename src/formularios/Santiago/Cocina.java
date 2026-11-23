@@ -1,14 +1,14 @@
 
-package prueba;
+package src.formularios.Santiago;
 
-public class AdministradorFORM extends javax.swing.JFrame {
+public class Cocina extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AdministradorFORM.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Cocina.class.getName());
 
     /**
-     * Creates new form AdministradorFORM
+     * Creates new form Cocina
      */
-    public AdministradorFORM() {
+    public Cocina() {
         initComponents();
         
     }
@@ -51,7 +51,7 @@ public class AdministradorFORM extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("MenuAdministrador");
+        setTitle("MenuCocina");
 
         txtEspera.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         txtEspera.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -338,7 +338,7 @@ public class AdministradorFORM extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new AdministradorFORM().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new Cocina().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

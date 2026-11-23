@@ -1,4 +1,4 @@
-package src.formularios.felipe;
+package src.formularios.felipe_ventanas.felipe;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;

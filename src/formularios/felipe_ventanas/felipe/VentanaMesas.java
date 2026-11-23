@@ -1,4 +1,4 @@
-package src.formularios.felipe;
+package src.formularios.felipe_ventanas.felipe;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;

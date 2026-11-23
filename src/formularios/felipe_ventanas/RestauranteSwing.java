@@ -1,4 +1,4 @@
-package src.vista;
+package src.formularios.felipe_ventanas;
 
 import src.DAOs.*;
 import src.entities.*;
